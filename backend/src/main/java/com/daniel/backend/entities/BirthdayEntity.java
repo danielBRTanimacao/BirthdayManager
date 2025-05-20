@@ -2,12 +2,20 @@ package com.daniel.backend.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.Data;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.sql.Timestamp;
 import java.time.*;
 
-@Data
+// Recomendado não usar o @Data
 @Entity
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class BirthdayEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,19 +32,22 @@ public class BirthdayEntity {
 
     private String notes;
 
-    private LocalDateTime createdDate;
-    private LocalDateTime updatedDate;
+    @CreationTimestamp // Cria o createdDate automaticamente
+    private Timestamp createdDate;
 
-    @PrePersist
-    public void prePersist() {
-        if (createdDate == null) {
-            createdDate = LocalDateTime.now();
-        }
-        updatedDate = LocalDateTime.now();
-    }
+    @UpdateTimestamp // Cria o updatedDate automaticamente
+    private Timestamp updatedDate;
 
-    @PreUpdate
-    public void preUpdate() {
-        updatedDate = LocalDateTime.now();
-    }
+//    @PrePersist
+//    public void prePersist() {
+//        if (createdDate == null) {
+//            createdDate = LocalDateTime.now();
+//        }
+//        updatedDate = LocalDateTime.now();
+//    }
+//
+//    @PreUpdate
+//    public void preUpdate() {
+//        updatedDate = LocalDateTime.now();
+//    }
 }

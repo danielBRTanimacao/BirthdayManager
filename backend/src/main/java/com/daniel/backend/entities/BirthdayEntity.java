@@ -17,7 +17,7 @@ public class BirthdayEntity {
 
     @NotBlank
     private String name;
-    // Gpt me deu uma dica interessante de Regex pesquisei a parte utilizei um para mes e dia
+
     @NotBlank
     @Pattern(regexp = "\\d{2}-\\d{2}", message = "Use o formato MM-DD")
     private String birthday;

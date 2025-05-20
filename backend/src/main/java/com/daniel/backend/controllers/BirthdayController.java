@@ -4,7 +4,6 @@ import com.daniel.backend.entities.BirthdayEntity;
 import com.daniel.backend.repositories.BirthdayRepository;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,5 +1,6 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
+import { BirthdayNote } from './BirthdayNote';
 
 @Component({
     selector: 'app-root',
@@ -17,5 +18,9 @@ export class AppComponent {
             .subscribe((res) => {
                 this.dados = res;
             });
+    }
+
+    submitBirthadayContent(data: BirthdayNote) {
+        this.httpClient.post('http://127.0.0.1:8080/api/birthday/add', data);
     }
 }

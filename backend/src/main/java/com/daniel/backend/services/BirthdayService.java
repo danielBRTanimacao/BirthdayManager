@@ -13,8 +13,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
-// Lógica de salvamento separada do controller
-// Boa prática
 @Service
 @RequiredArgsConstructor
 public class BirthdayService {

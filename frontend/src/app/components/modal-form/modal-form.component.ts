@@ -1,33 +1,36 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import {
+    FormGroup,
+    FormControl,
+    Validators,
+    ReactiveFormsModule,
+} from '@angular/forms';
 import { Component, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { BirthdayNote } from '../../BirthdayNote';
 
 @Component({
     selector: 'app-modal-form',
-    imports: [HttpClientModule, FormsModule],
+    imports: [ReactiveFormsModule],
     templateUrl: './modal-form.component.html',
     styleUrl: './modal-form.component.css',
 })
 export class ModalFormComponent {
     httpClient = inject(HttpClient);
-    name = '';
-    birthday = '';
-    notes = '';
+
+    form = new FormGroup({
+        userId: new FormControl({ value: 1, disabled: false }), // QUando tiver TOKEN salvar ID do user
+        name: new FormControl('', Validators.required),
+        birthday: new FormControl('', [Validators.required]),
+        notes: new FormControl(''),
+    });
 
     submitBirthadayContent(event: Event) {
         event.preventDefault();
 
-        const data: BirthdayNote = {
-            name: this.name,
-            birthday: this.birthday,
-            notes: this.notes,
-        };
-
         this.httpClient
-            .post('http://127.0.0.1:8080/api/birthday/add', data)
+            .post('http://127.0.0.1:8080/api/birthday/add', this.form.value)
             .subscribe((res) => {
                 console.log('Enviado com sucesso', res);
+                window.location.reload();
             });
     }
 }

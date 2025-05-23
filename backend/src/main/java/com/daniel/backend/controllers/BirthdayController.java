@@ -29,7 +29,7 @@ public class BirthdayController {
         return new ResponseEntity<>(birthdayService.create(dto), HttpStatus.CREATED);
     }
 
-    @PatchMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<BirthdayEntityDTO> updateBirthday(
             @PathVariable("id") Long id,
             @Valid @RequestBody NewBirthdayDTO updateDTO
@@ -37,7 +37,7 @@ public class BirthdayController {
         return new ResponseEntity<>(birthdayService.update(id, updateDTO), HttpStatus.OK);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public void delBirthday(@PathVariable Long id) {
         birthdayService.delete(id);
 

@@ -11,9 +11,10 @@
         </a>
         <form
             class="flex flex-col gap-3"
-            (submit)="submitBirthadayContent($event)"
+            [formGroup]="form"
+            (ngSubmit)="submitBirthadayContent($event)"
         >
-            <div class="flex gap-2">
+            <div class="flex justify-center gap-2">
                 <button
                     class="w-20 h-10 cursor-pointer text-white bg-light-pastel-green hover:bg-dark-pastel-green"
                     type="button"
@@ -42,20 +43,21 @@
             <input
                 type="text"
                 class="text-2xl font-bold outline-0 placeholder:opacity-50"
-                value="Nome do aniversariante"
+                placeholder="Nome do aniversariante"
                 required
-                [(ngModel)]="name"
+                formControlName="name"
             />
             <input
-                type="date"
-                [(ngModel)]="birthday"
-                name="birthday"
+                type="text"
+                class="text-2xl font-bold outline-0 placeholder:opacity-50"
+                formControlName="birthday"
+                placeholder="dia-mês"
                 required
             />
             <input
                 type="text"
-                [(ngModel)]="notes"
-                value="Informações extras"
+                formControlName="notes"
+                placeholder="Informações extras"
                 class="w-full outline-0 placeholder:opacity-50"
             />
             <button

@@ -40,7 +40,8 @@ public class BirthdayService {
 
     @Transactional
     public void delete(Long id) {
-        BirthdayEntity toDelete = repo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        BirthdayEntity toDelete = repo.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         repo.delete(toDelete);
     }
 }

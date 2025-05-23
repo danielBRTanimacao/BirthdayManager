@@ -1,0 +1,69 @@
+<div
+    id="createNoteModal"
+    class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 opacity-0 pointer-events-none transition-all duration-300"
+>
+    <div class="bg-white p-6 rounded-xl shadow-lg w-[90%] max-w-md relative">
+        <a
+            href="#"
+            class="absolute top-2 right-3 text-gray-500 text-xl hover:text-red-500"
+        >
+            &times;
+        </a>
+        <form
+            class="flex flex-col gap-3"
+            (submit)="submitBirthadayContent($event)"
+        >
+            <div class="flex gap-2">
+                <button
+                    class="w-20 h-10 cursor-pointer text-white bg-light-pastel-green hover:bg-dark-pastel-green"
+                    type="button"
+                >
+                    verde
+                </button>
+                <button
+                    class="w-20 h-10 cursor-pointer text-white bg-light-pastel-red hover:bg-dark-pastel-red"
+                    type="button"
+                >
+                    Vermelho
+                </button>
+                <button
+                    class="w-20 h-10 cursor-pointer text-white bg-light-pastel-blue hover:bg-dark-pastel-blue"
+                    type="button"
+                >
+                    Azul
+                </button>
+                <button
+                    class="w-20 h-10 cursor-pointer text-white bg-light-pastel-purple hover:bg-dark-pastel-purple"
+                    type="button"
+                >
+                    Roxo
+                </button>
+            </div>
+            <input
+                type="text"
+                class="text-2xl font-bold outline-0 placeholder:opacity-50"
+                value="Nome do aniversariante"
+                required
+                [(ngModel)]="name"
+            />
+            <input
+                type="date"
+                [(ngModel)]="birthday"
+                name="birthday"
+                required
+            />
+            <input
+                type="text"
+                [(ngModel)]="notes"
+                value="Informações extras"
+                class="w-full outline-0 placeholder:opacity-50"
+            />
+            <button
+                class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 cursor-pointer"
+                type="submit"
+            >
+                Lembrar
+            </button>
+        </form>
+    </div>
+</div>

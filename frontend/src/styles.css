@@ -21,3 +21,8 @@
 body {
     background-color: rgb(234, 234, 234);
 }
+
+#createNoteModal:target {
+    opacity: 1;
+    pointer-events: auto;
+}

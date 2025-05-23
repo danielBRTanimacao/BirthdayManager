@@ -8,9 +8,11 @@ public record NewUserDTO(
         Long id,
         @NotBlank
         String name,
+
         @Email
         String email,
+
         @NotBlank
-        @Size(min = 6)
+        @Size(min = 6, message = "deve conter no minimo 6 caracteres")
         String password) {
 }

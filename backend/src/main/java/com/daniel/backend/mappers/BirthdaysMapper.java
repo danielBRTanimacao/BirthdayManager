@@ -1,17 +1,16 @@
 package com.daniel.backend.mappers;
 
+import com.daniel.backend.components.UserMapperHelper;
 import com.daniel.backend.dtos.BirthdayEntityDTO;
 import com.daniel.backend.dtos.NewBirthdayDTO;
 import com.daniel.backend.entities.BirthdayEntity;
-import org.mapstruct.BeanMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring") // Diz para o MapStruct que é um mapper em um projeto Spring
+@Mapper(componentModel = "spring", uses = {UserMapperHelper.class}) // Diz para o MapStruct que é um mapper em um projeto Spring
 public interface BirthdaysMapper {
+    @Mapping(source = "userId", target = "user")
     BirthdayEntity toEntity (NewBirthdayDTO dto); // Transforma o DTO em entidade
     BirthdayEntityDTO toDTO (BirthdayEntity entity); // Transforma a entidade em DTO
 

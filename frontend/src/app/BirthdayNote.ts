@@ -1,5 +1,5 @@
 export class BirthdayNote {
-    name;
-    birthday;
-    notes;
+    name!: string;
+    birthday!: string;
+    notes!: string;
 }

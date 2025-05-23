@@ -13,7 +13,10 @@
         >
             &times;
         </a>
-        <form class="flex flex-col gap-3">
+        <form
+            class="flex flex-col gap-3"
+            (submit)="submitBirthadayContent($event)"
+        >
             <div class="flex gap-2">
                 <button
                     class="w-20 h-10 cursor-pointer text-white bg-light-pastel-green hover:bg-dark-pastel-green"
@@ -45,10 +48,17 @@
                 class="text-2xl font-bold outline-0 placeholder:opacity-50"
                 value="Nome do aniversariante"
                 required
+                [(ngModel)]="name"
             />
-            <input type="date" name="" id="" required />
+            <input
+                type="date"
+                [(ngModel)]="birthday"
+                name="birthday"
+                required
+            />
             <input
                 type="text"
+                [(ngModel)]="notes"
                 value="Informações extras"
                 class="w-full outline-0 placeholder:opacity-50"
             />

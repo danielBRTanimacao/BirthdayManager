@@ -2,6 +2,8 @@
 @import "tailwindcss";
 
 @theme {
+    --color-light-pastel-yellow: #fada7a;
+    --color-dark-pastel-yellow: #f0a04b;
     --color-light-pastel-green: #cae8bd;
     --color-dark-pastel-green: #b0db9c;
     --color-light-pastel-red: #da6c6c;

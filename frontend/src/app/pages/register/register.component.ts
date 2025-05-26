@@ -6,6 +6,7 @@ import {
     ReactiveFormsModule,
 } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-register',
@@ -15,6 +16,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class RegisterComponent {
     httpClient = inject(HttpClient);
+    router = inject(Router);
 
     form = new FormGroup({
         name: new FormControl('', Validators.required),
@@ -27,8 +29,8 @@ export class RegisterComponent {
 
         this.httpClient
             .post('http://127.0.0.1:8080/api/user/create', this.form.value)
-            .subscribe((res) => {
-                window.location.reload();
+            .subscribe(() => {
+                this.router.navigate(['/login']);
             });
     }
 }

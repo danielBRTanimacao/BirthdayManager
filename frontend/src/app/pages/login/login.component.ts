@@ -6,6 +6,7 @@ import {
     Validators,
     ReactiveFormsModule,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-login',
@@ -15,24 +16,28 @@ import {
 })
 export class LoginComponent {
     httpClient = inject(HttpClient);
+    router = inject(Router);
+    errorSubmit: string = '';
 
     form = new FormGroup({
         email: new FormControl('', Validators.required),
         password: new FormControl('', [Validators.required]),
     });
 
-    constructor() {}
-
     submitDataLogin(event: Event) {
         event.preventDefault();
 
         this.httpClient
             .post('http://127.0.0.1:8080/api/user/login', this.form.value)
-            .subscribe((response: any) => {
-                console.log(response);
-
-                localStorage.setItem('token', response['token']);
-                localStorage.setItem('userId', response['id']);
+            .subscribe({
+                next: (response: any) => {
+                    localStorage.setItem('token', response.token);
+                    localStorage.setItem('userId', response.id);
+                    this.router.navigate(['']);
+                },
+                error: (err) => {
+                    this.errorSubmit = err.error.error;
+                },
             });
     }
 }

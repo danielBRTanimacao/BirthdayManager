@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { ModalFormComponent } from '../../components/modal-form/modal-form.component';
 import { ModalConfigComponent } from '../../components/modal-config/modal-config.component';
@@ -15,8 +15,14 @@ export class MainComponent {
     dados: any;
 
     constructor() {
+        const token = localStorage.getItem('token');
+
+        const headers = new HttpHeaders({
+            Authorization: `Bearer ${token}`,
+        });
+
         this.httpClient
-            .get('http://127.0.0.1:8080/api/birthday')
+            .get('http://127.0.0.1:8080/api/birthday', { headers })
             .subscribe((res) => {
                 this.dados = res;
             });

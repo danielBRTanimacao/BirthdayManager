@@ -28,3 +28,9 @@ body {
     opacity: 1;
     pointer-events: auto;
 }
+
+main {
+    background-image: url(https://img.cdndsgni.com/preview/10532917.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}

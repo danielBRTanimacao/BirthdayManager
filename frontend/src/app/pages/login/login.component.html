@@ -1,1 +1,33 @@
-<p>login works!</p>
+<main class="h-[100dvh] flex justify-center items-center">
+    <form
+        class="flex flex-col gap-3"
+        [formGroup]="form"
+        (ngSubmit)="submitDataLogin($event)"
+    >
+        <h1 class="text-4xl pb-3">Login</h1>
+        <input
+            type="email"
+            class="text-2xl outline-0 border-b font-bold placeholder:opacity-50"
+            placeholder="Email"
+            required
+            formControlName="email"
+        />
+        <input
+            type="password"
+            class="text-2xl outline-0 border-b font-bold placeholder:opacity-50"
+            placeholder="sua senha"
+            required
+            formControlName="password"
+        />
+        <p>
+            Não tem uma conta?
+            <a href="/registro" class="text-blue-600">Cadastre-se</a> agora!
+        </p>
+        <button
+            class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 cursor-pointer"
+            type="submit"
+        >
+            Logar
+        </button>
+    </form>
+</main>

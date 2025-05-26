@@ -1,1 +1,40 @@
-<p>register works!</p>
+<main class="h-[100dvh] flex justify-center items-center">
+    <form
+        class="flex flex-col gap-3"
+        [formGroup]="form"
+        (ngSubmit)="submitDataRegister($event)"
+    >
+        <h1 class="text-4xl pb-3">Registrar-se</h1>
+        <input
+            type="text"
+            class="text-2xl outline-0 border-b font-bold placeholder:opacity-50"
+            placeholder="Seu nome"
+            required
+            formControlName="name"
+        />
+        <input
+            type="email"
+            class="text-2xl outline-0 border-b font-bold placeholder:opacity-50"
+            placeholder="Email"
+            required
+            formControlName="email"
+        />
+        <input
+            type="password"
+            class="text-2xl outline-0 border-b font-bold placeholder:opacity-50"
+            placeholder="sua senha"
+            required
+            formControlName="password"
+        />
+        <p>
+            Já tem uma conta? faça
+            <a href="/login" class="text-blue-600">Login</a>
+        </p>
+        <button
+            class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 cursor-pointer"
+            type="submit"
+        >
+            Registrar
+        </button>
+    </form>
+</main>

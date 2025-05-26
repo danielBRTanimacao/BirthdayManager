@@ -1,4 +1,4 @@
 package com.daniel.backend.dtos;
 
-public record LoginUserDTO(String email, String token){
+public record LoginUserDTO(Long id, String token){
 }

@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "birthdays")
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserEntity {
@@ -25,9 +25,7 @@ public class UserEntity {
     private List<BirthdayEntity> birthdays;
 
     private String name;
-
     private String email;
-
     private String password;
 
     @CreationTimestamp

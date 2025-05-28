@@ -2,10 +2,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { ModalFormComponent } from '../../components/modal-form/modal-form.component';
 import { ModalConfigComponent } from '../../components/modal-config/modal-config.component';
+import { PostItComponent } from '../../components/post-it/post-it.component';
 
 @Component({
     selector: 'app-main',
-    imports: [ModalFormComponent, ModalConfigComponent],
+    imports: [ModalFormComponent, ModalConfigComponent, PostItComponent],
     templateUrl: './main.component.html',
     styleUrl: './main.component.css',
 })

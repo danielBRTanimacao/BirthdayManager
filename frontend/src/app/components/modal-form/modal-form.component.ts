@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {
     FormGroup,
     FormControl,
@@ -17,17 +17,26 @@ export class ModalFormComponent {
     httpClient = inject(HttpClient);
 
     form = new FormGroup({
-        userId: new FormControl({ value: 1, disabled: false }), // QUando tiver TOKEN salvar ID do user
+        userId: new FormControl({
+            value: localStorage.getItem('userId'),
+            disabled: false,
+        }),
         name: new FormControl('', Validators.required),
         birthday: new FormControl('', [Validators.required]),
         notes: new FormControl(''),
+    });
+
+    headers = new HttpHeaders({
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
     });
 
     submitBirthadayContent(event: Event) {
         event.preventDefault();
 
         this.httpClient
-            .post('http://127.0.0.1:8080/api/birthday/add', this.form.value)
+            .post('http://127.0.0.1:8080/api/birthday/add', this.form.value, {
+                headers: this.headers,
+            })
             .subscribe((res) => {
                 console.log('Enviado com sucesso', res);
                 window.location.reload();

@@ -20,8 +20,12 @@
     font-style: normal;
 }
 
-body {
+body,
+.bg-paper {
     background-color: rgb(234, 234, 234);
+    background-image: url(https://www.photos-public-domain.com/wp-content/uploads/2012/05/ivory-off-white-paper-texture.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 #createNoteModal:target {
@@ -29,8 +33,14 @@ body {
     pointer-events: auto;
 }
 
-main {
+.black-board {
+    background-color: #274c43 !important;
+}
+
+.bg-paper {
     background-image: url(https://img.cdndsgni.com/preview/10532917.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
+}
+
+.h-canva {
+    height: calc(100dvh - 53px);
 }

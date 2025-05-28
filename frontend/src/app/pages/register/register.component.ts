@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import {
     FormGroup,
     FormControl,
@@ -15,6 +15,8 @@ import { Router } from '@angular/router';
     styleUrl: './register.component.css',
 })
 export class RegisterComponent {
+    @Output() pageChange = new EventEmitter<void>();
+
     httpClient = inject(HttpClient);
     router = inject(Router);
 
@@ -23,6 +25,10 @@ export class RegisterComponent {
         email: new FormControl('', Validators.required),
         password: new FormControl('', [Validators.required]),
     });
+
+    changeToLogin() {
+        this.pageChange.emit();
+    }
 
     submitDataRegister(event: Event) {
         event.preventDefault();

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import {
     FormGroup,
     FormControl,
@@ -15,6 +15,8 @@ import { Router } from '@angular/router';
     styleUrl: './login.component.css',
 })
 export class LoginComponent {
+    @Output() pageChange = new EventEmitter<void>();
+
     httpClient = inject(HttpClient);
     router = inject(Router);
     errorSubmit: string = '';
@@ -23,6 +25,10 @@ export class LoginComponent {
         email: new FormControl('', Validators.required),
         password: new FormControl('', [Validators.required]),
     });
+
+    changeToRegister() {
+        this.pageChange.emit();
+    }
 
     submitDataLogin(event: Event) {
         event.preventDefault();

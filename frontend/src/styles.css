@@ -44,3 +44,8 @@ body,
 .h-canva {
     height: calc(100dvh - 53px);
 }
+
+.black-board {
+    position: relative;
+    overflow: hidden;
+}

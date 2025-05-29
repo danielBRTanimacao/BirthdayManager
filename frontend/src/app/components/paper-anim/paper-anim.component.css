@@ -1,0 +1,62 @@
+/* paper-anim.component.css */
+.tear-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none; /* para deixar clicar no que estiver por baixo após o rasgo */
+}
+
+/* estilo base do papel */
+.paper {
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    background: #faf8f0 url(https://img.cdndsgni.com/preview/10532917.jpg)
+        center/cover no-repeat;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* parte de cima começa em cima e anima descendo e sumindo */
+.paper-top {
+    top: 0;
+    animation: tearTop 1.2s ease-out forwards;
+}
+
+/* parte de baixo começa embaixo e anima subindo e sumindo */
+.paper-bottom {
+    bottom: 0;
+    animation: tearBottom 1.2s ease-out forwards;
+}
+
+@keyframes tearTop {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    70% {
+        transform: translateY(-110%) rotate(-2deg);
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(-150%) rotate(-5deg);
+        opacity: 0;
+    }
+}
+
+@keyframes tearBottom {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    70% {
+        transform: translateY(110%) rotate(2deg);
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(150%) rotate(5deg);
+        opacity: 0;
+    }
+}

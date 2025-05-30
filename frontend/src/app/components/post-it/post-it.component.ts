@@ -32,6 +32,7 @@ export class PostItComponent implements AfterViewInit {
     onMouseDown(event: MouseEvent) {
         this.dragging = true;
         const element = this.el.nativeElement.querySelector('.draggable');
+        element.classList.add('cursor-grabbing');
         const rect = element.getBoundingClientRect();
 
         this.offsetX = event.clientX - rect.left;

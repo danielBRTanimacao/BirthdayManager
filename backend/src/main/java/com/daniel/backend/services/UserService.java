@@ -1,6 +1,6 @@
 package com.daniel.backend.services;
 
-import com.daniel.backend.dtos.LoginUserDTO;
+import com.daniel.backend.dtos.ResponseUserDTO;
 import com.daniel.backend.dtos.NewLoginUserDTO;
 import com.daniel.backend.dtos.NewUserDTO;
 import com.daniel.backend.dtos.UserEntityDTO;
@@ -28,7 +28,7 @@ public class UserService {
         return mapper.toDTO(user);
     }
 
-    public LoginUserDTO login(NewLoginUserDTO userDTO) {
+    public ResponseUserDTO login(NewLoginUserDTO userDTO) {
 
         UserEntity user = userRepository.findByEmail(userDTO.email())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid email"));
@@ -39,6 +39,6 @@ public class UserService {
 
         String token = tokenService.generateToken(user);
 
-        return new LoginUserDTO(user.getId(), token);
+        return new ResponseUserDTO(user.getId(), token);
     }
 }

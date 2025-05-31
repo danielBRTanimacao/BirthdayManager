@@ -30,12 +30,9 @@ export class MainComponent {
                 next: (res) => {
                     this.dados = res;
                 },
-                error: (error) => {
-                    if (error.status === 403 || error.status === 401) {
-                        localStorage.removeItem('token');
-                        this.router.navigate(['/auth']);
-                    } else {
-                    }
+                error: () => {
+                    localStorage.removeItem('token');
+                    this.router.navigate(['/auth']);
                 },
             });
     }

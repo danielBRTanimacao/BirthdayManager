@@ -24,12 +24,14 @@
     </a>
 </header>
 <main class="black-board h-canva text-white">
+    @for (data of dados; track dados.id) {
     <app-post-it
-        [name]="'Daniel'"
-        [birthdayDate]="'13-05'"
-        [anotation]="'Fazer reunião às 10h'"
-        [created]="'27-05-2025'"
+        [name]="data.name"
+        [birthdayDate]="data.birthday"
+        [anotation]="data.notes"
+        [created]="data.createdDate"
     />
+    }
 </main>
 <app-modal-form />
 <app-modal-config />

@@ -24,6 +24,20 @@ export class PostItComponent implements AfterViewInit {
 
     constructor(private el: ElementRef) {}
 
+    birthdayFormat() {
+        const [month, day] = this.birthdayDate.split('-');
+        return `${day}/${month}`;
+    }
+
+    formatCreatedDate() {
+        try {
+            const date = new Date(this.created);
+            return date.toLocaleString('pt-BR');
+        } catch (error) {
+            return this.created;
+        }
+    }
+
     ngAfterViewInit() {
         const el = this.el.nativeElement.querySelector('.draggable');
         el.addEventListener('mousedown', this.onMouseDown.bind(this));

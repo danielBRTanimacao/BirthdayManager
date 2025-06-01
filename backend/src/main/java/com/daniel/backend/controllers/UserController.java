@@ -1,6 +1,6 @@
 package com.daniel.backend.controllers;
 
-import com.daniel.backend.dtos.ResponseUserDTO;
+import com.daniel.backend.dtos.ResponseTokenDTO;
 import com.daniel.backend.dtos.NewLoginUserDTO;
 import com.daniel.backend.dtos.NewUserDTO;
 import com.daniel.backend.dtos.UserEntityDTO;
@@ -25,7 +25,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ResponseUserDTO> loginUser(@Valid @RequestBody NewLoginUserDTO dto) {
+    public ResponseEntity<ResponseTokenDTO> loginUser(@Valid @RequestBody NewLoginUserDTO dto) {
         return ResponseEntity.ok(userService.login(dto));
     }
 }

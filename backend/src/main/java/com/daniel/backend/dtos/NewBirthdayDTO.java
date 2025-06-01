@@ -5,10 +5,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
-/*
-    DTO para criação e update da entidade
-    Pode ser separado em outro DTO quando houver mais atributos.
- */
 public record NewBirthdayDTO(
         Long id,
 

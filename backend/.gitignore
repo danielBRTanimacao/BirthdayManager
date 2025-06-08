@@ -35,3 +35,7 @@ build/
 ### DB ####
 db.sqlite
 .db
+
+### ENV ####
+
+.env

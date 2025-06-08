@@ -1,5 +1,7 @@
 package com.daniel.backend.Beans;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -9,14 +11,20 @@ import java.util.Properties;
 
 @Configuration
 public class BeansFactory {
+    @Value("${spring.mail.username}")
+    private String email;
+
+    @Value("${spring.mail.password}")
+    private String password;
+
     @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
 
-        mailSender.setUsername("my.gmail@gmail.com"); // Necessario redefinir Email para enviar e a senha dele
-        mailSender.setPassword("password");
+        mailSender.setUsername(email);
+        mailSender.setPassword(password);
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");

@@ -1,7 +1,7 @@
 package com.daniel.backend.services;
 
 import com.daniel.backend.components.EmailDetails;
-import com.daniel.backend.services.interfacesFactory.EmailService;
+import com.daniel.backend.services.servicesInterface.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;

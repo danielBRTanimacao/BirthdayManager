@@ -1,4 +1,4 @@
-package com.daniel.backend.Beans;
+package com.daniel.backend.infra.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

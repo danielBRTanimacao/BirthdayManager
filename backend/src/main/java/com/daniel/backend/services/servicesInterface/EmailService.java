@@ -1,4 +1,4 @@
-package com.daniel.backend.services.interfacesFactory;
+package com.daniel.backend.services.servicesInterface;
 
 import com.daniel.backend.components.EmailDetails;
 

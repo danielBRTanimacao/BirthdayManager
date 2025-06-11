@@ -16,7 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BirthdayController {
 
-    // Instância apenas o service, sem outras dependências (baixo acoplamento, boa prática)
     private final BirthdayService birthdayService;
 
     @GetMapping

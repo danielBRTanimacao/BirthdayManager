@@ -1,4 +1,4 @@
 package com.daniel.backend.dtos;
 
-public record RequestEmailDTO(Long id,String senderMail, String subject, String body) {
+public record RequestEmailDTO(String senderMail, String subject, String body) {
 }

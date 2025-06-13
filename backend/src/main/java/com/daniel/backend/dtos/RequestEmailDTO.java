@@ -1,4 +1,9 @@
 package com.daniel.backend.dtos;
 
-public record RequestEmailDTO(String senderMail, String subject, String body) {
+import jakarta.validation.constraints.NotBlank;
+
+public record RequestEmailDTO(
+        @NotBlank String senderMail,
+        @NotBlank String subject,
+        @NotBlank String body) {
 }

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/mail")
 @RequiredArgsConstructor
 public class EmailController {
-    private EmailService emailService;
+    private final EmailService emailService;
 
     @PostMapping("/send")
     public ResponseEmailDTO sendingMail(@RequestBody RequestEmailDTO emailDetails) {

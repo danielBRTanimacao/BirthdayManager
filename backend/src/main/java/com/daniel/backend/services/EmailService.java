@@ -13,7 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 @RequiredArgsConstructor
 public class EmailService {
-    private JavaMailSender javaMailSender;
+    private final JavaMailSender javaMailSender;
 
     @Value("${spring.mail.username}")
     private String senderMail;
@@ -22,6 +22,7 @@ public class EmailService {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
 
+            System.out.println(details.body());
             message.setFrom(senderMail);
             message.setTo(details.senderMail());
             message.setSubject(details.subject());

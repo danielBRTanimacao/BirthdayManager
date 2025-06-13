@@ -39,6 +39,6 @@ public class UserService {
 
         String token = tokenService.generateToken(user);
 
-        return new ResponseTokenDTO(user.getId(), token);
+        return new ResponseTokenDTO(user.getId(), user.getEmail(), token);
     }
 }

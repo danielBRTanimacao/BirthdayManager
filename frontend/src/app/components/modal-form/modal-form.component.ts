@@ -6,6 +6,7 @@ import {
     ReactiveFormsModule,
 } from '@angular/forms';
 import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-modal-form',
@@ -15,6 +16,7 @@ import { Component, inject } from '@angular/core';
 })
 export class ModalFormComponent {
     httpClient = inject(HttpClient);
+    router = inject(Router);
 
     form = new FormGroup({
         userId: new FormControl({
@@ -39,7 +41,7 @@ export class ModalFormComponent {
             })
             .subscribe((res) => {
                 console.log('Enviado com sucesso', res);
-                window.location.reload();
+                this.router.navigate(['']);
             });
     }
 }

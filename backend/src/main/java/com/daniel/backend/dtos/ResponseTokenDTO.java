@@ -1,4 +1,4 @@
 package com.daniel.backend.dtos;
 
-public record ResponseTokenDTO(Long id, String token){
+public record ResponseTokenDTO(Long id, String email, String token){
 }

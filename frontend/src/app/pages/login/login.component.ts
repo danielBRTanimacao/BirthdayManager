@@ -39,6 +39,7 @@ export class LoginComponent {
                 next: (response: any) => {
                     localStorage.setItem('token', response.token);
                     localStorage.setItem('userId', response.id);
+                    localStorage.setItem('mail', response.email);
                     this.router.navigate(['']);
                 },
                 error: (err) => {

@@ -1,7 +1,7 @@
 package com.daniel.backend.mappers;
 
-import com.daniel.backend.dtos.NewUserDTO;
-import com.daniel.backend.dtos.UserEntityDTO;
+import com.daniel.backend.dtos.RequestUserDTO;
+import com.daniel.backend.dtos.ResponseUserDTO;
 import com.daniel.backend.entities.UserEntity;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
@@ -12,11 +12,11 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
-    UserEntity toEntity (NewUserDTO dto);
-    UserEntityDTO toDTO (UserEntity entity);
+    UserEntity toEntity (RequestUserDTO dto);
+    ResponseUserDTO toDTO (UserEntity entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    UserEntity partialUpdate(NewUserDTO dto, @MappingTarget UserEntity entity);
+    UserEntity partialUpdate(RequestUserDTO dto, @MappingTarget UserEntity entity);
 
-    List<UserEntityDTO> toDTOs (List<UserEntity> list);
+    List<ResponseUserDTO> toDTOs (List<UserEntity> list);
 }

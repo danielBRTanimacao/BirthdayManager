@@ -1,11 +1,10 @@
 package com.daniel.backend.dtos;
 
-import com.daniel.backend.entities.UserEntity;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
-public record NewBirthdayDTO(
+public record RequestBirthdayDTO(
         Long id,
 
         @NotNull

@@ -1,7 +1,7 @@
 package com.daniel.backend.services;
 
-import com.daniel.backend.dtos.BirthdayEntityDTO;
-import com.daniel.backend.dtos.NewBirthdayDTO;
+import com.daniel.backend.dtos.ResponseBirthdayDTO;
+import com.daniel.backend.dtos.RequestBirthdayDTO;
 import com.daniel.backend.entities.BirthdayEntity;
 import com.daniel.backend.mappers.BirthdaysMapper;
 import com.daniel.backend.repositories.BirthdayRepository;
@@ -20,21 +20,21 @@ public class BirthdayService {
     private final BirthdayRepository repo;
     private final BirthdaysMapper mapper;
 
-    public BirthdayEntityDTO create(NewBirthdayDTO dto) {
+    public ResponseBirthdayDTO create(RequestBirthdayDTO dto) {
         BirthdayEntity birthday = mapper.toEntity(dto);
         birthday = repo.save(birthday);
         return mapper.toDTO(birthday);
     }
 
-    @Transactional // Caso de erro no metodo, não salva nenhuma alteração no banco.
-    public BirthdayEntityDTO update(Long id, NewBirthdayDTO dto) {
+    @Transactional
+    public ResponseBirthdayDTO update(Long id, RequestBirthdayDTO dto) {
         BirthdayEntity toUpdate = repo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         toUpdate = mapper.partialUpdate(dto, toUpdate);
         toUpdate = repo.save(toUpdate);
         return mapper.toDTO(toUpdate);
     }
 
-    public List<BirthdayEntityDTO> listAll() {
+    public List<ResponseBirthdayDTO> listAll() {
         return mapper.toDTOs(repo.findAll());
     }
 

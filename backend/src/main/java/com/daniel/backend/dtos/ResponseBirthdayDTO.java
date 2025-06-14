@@ -2,9 +2,10 @@ package com.daniel.backend.dtos;
 
 import java.time.LocalDateTime;
 
-public record UserEntityDTO(
+public record ResponseBirthdayDTO(
         String name,
-        String email,
+        String birthday,
+        String notes,
         LocalDateTime createdDate,
         LocalDateTime updatedDate) {
 }

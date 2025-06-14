@@ -1,9 +1,9 @@
 package com.daniel.backend.controllers;
 
+import com.daniel.backend.dtos.RequestUserDTO;
 import com.daniel.backend.dtos.ResponseTokenDTO;
-import com.daniel.backend.dtos.NewLoginUserDTO;
-import com.daniel.backend.dtos.NewUserDTO;
-import com.daniel.backend.dtos.UserEntityDTO;
+import com.daniel.backend.dtos.RequestLoginDTO;
+import com.daniel.backend.dtos.ResponseUserDTO;
 import com.daniel.backend.repositories.UserRepository;
 import com.daniel.backend.services.UserService;
 import jakarta.validation.Valid;
@@ -20,12 +20,12 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/create")
-    public ResponseEntity<UserEntityDTO> createUser(@Valid @RequestBody NewUserDTO dto) {
+    public ResponseEntity<ResponseUserDTO> createUser(@Valid @RequestBody RequestUserDTO dto) {
         return new ResponseEntity<>(userService.create(dto), HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ResponseTokenDTO> loginUser(@Valid @RequestBody NewLoginUserDTO dto) {
+    public ResponseEntity<ResponseTokenDTO> loginUser(@Valid @RequestBody RequestLoginDTO dto) {
         return ResponseEntity.ok(userService.login(dto));
     }
 }

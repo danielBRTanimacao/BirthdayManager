@@ -1,9 +1,9 @@
 package com.daniel.backend.services;
 
+import com.daniel.backend.dtos.RequestUserDTO;
 import com.daniel.backend.dtos.ResponseTokenDTO;
-import com.daniel.backend.dtos.NewLoginUserDTO;
-import com.daniel.backend.dtos.NewUserDTO;
-import com.daniel.backend.dtos.UserEntityDTO;
+import com.daniel.backend.dtos.RequestLoginDTO;
+import com.daniel.backend.dtos.ResponseUserDTO;
 import com.daniel.backend.entities.UserEntity;
 import com.daniel.backend.infra.security.TokenService;
 import com.daniel.backend.mappers.UserMapper;
@@ -21,14 +21,14 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final TokenService tokenService;
 
-    public UserEntityDTO create(NewUserDTO userDTO) {
+    public ResponseUserDTO create(RequestUserDTO userDTO) {
         UserEntity user = mapper.toEntity(userDTO);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user = userRepository.save(user);
         return mapper.toDTO(user);
     }
 
-    public ResponseTokenDTO login(NewLoginUserDTO userDTO) {
+    public ResponseTokenDTO login(RequestLoginDTO userDTO) {
 
         UserEntity user = userRepository.findByEmail(userDTO.email())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid email"));

@@ -1,7 +1,7 @@
 package com.daniel.backend.controllers;
 
-import com.daniel.backend.dtos.BirthdayEntityDTO;
-import com.daniel.backend.dtos.NewBirthdayDTO;
+import com.daniel.backend.dtos.ResponseBirthdayDTO;
+import com.daniel.backend.dtos.RequestBirthdayDTO;
 import com.daniel.backend.services.BirthdayService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,19 +19,19 @@ public class BirthdayController {
     private final BirthdayService birthdayService;
 
     @GetMapping
-    public ResponseEntity<List<BirthdayEntityDTO>> getAllBirthdays() {
+    public ResponseEntity<List<ResponseBirthdayDTO>> getAllBirthdays() {
         return new ResponseEntity<>(birthdayService.listAll(), HttpStatus.OK);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<BirthdayEntityDTO> addBirthday(@Valid @RequestBody NewBirthdayDTO dto) {
+    public ResponseEntity<ResponseBirthdayDTO> addBirthday(@Valid @RequestBody RequestBirthdayDTO dto) {
         return new ResponseEntity<>(birthdayService.create(dto), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BirthdayEntityDTO> updateBirthday(
+    public ResponseEntity<ResponseBirthdayDTO> updateBirthday(
             @PathVariable("id") Long id,
-            @Valid @RequestBody NewBirthdayDTO updateDTO
+            @Valid @RequestBody RequestBirthdayDTO updateDTO
     ) {
         return new ResponseEntity<>(birthdayService.update(id, updateDTO), HttpStatus.OK);
     }

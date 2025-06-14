@@ -26,6 +26,7 @@ export class ModalFormComponent {
         name: new FormControl('', Validators.required),
         birthday: new FormControl('', [Validators.required]),
         notes: new FormControl(''),
+        colors: new FormControl(''),
     });
 
     headers = new HttpHeaders({

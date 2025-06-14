@@ -1,10 +1,4 @@
-import {
-    Component,
-    Input,
-    ElementRef,
-    HostListener,
-    AfterViewInit,
-} from '@angular/core';
+import { Component, Input, ElementRef, AfterViewInit } from '@angular/core';
 
 @Component({
     selector: 'app-post-it',
@@ -15,6 +9,7 @@ import {
 export class PostItComponent implements AfterViewInit {
     @Input() name!: string;
     @Input() birthdayDate!: string;
+    @Input() colors!: string;
     @Input() anotation!: string;
     @Input() created!: string;
 

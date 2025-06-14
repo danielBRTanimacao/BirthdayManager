@@ -1,5 +1,10 @@
 <div
-    class="draggable select-none cursor-grab shadow-xl absolute bg-light-pastel-yellow text-gray-800 h-40 w-50 p-2"
+    class="draggable select-none cursor-grab shadow-xl absolute text-white h-40 w-50 p-2"
+    [style]="
+        'background:' +
+        colors +
+        '; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);'
+    "
 >
     <div class="flex items-center justify-center">
         <img

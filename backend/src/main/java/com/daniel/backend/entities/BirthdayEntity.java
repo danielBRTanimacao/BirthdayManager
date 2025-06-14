@@ -29,9 +29,18 @@ public class BirthdayEntity {
 
     private String notes;
 
+    private String colors;
+
     @CreationTimestamp
     private Timestamp createdDate;
 
     @UpdateTimestamp
     private Timestamp updatedDate;
+
+    @PrePersist
+    public void prePersist() {
+        if (colors == null) {
+            colors = "#fada7a";
+        }
+    }
 }

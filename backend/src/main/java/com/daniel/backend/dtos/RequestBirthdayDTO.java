@@ -17,6 +17,9 @@ public record RequestBirthdayDTO(
         @Pattern(regexp = "\\d{2}-\\d{2}", message = "Use o formato MM-DD")
         String birthday,
 
-        String notes
+        String notes,
+
+        String colors
+
 ) {
 }

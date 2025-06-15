@@ -10,6 +10,7 @@ export class PostItComponent implements AfterViewInit {
     @Input() name!: string;
     @Input() birthdayDate!: string;
     @Input() colors!: string;
+    @Input() textColor!: string;
     @Input() anotation!: string;
     @Input() created!: string;
 

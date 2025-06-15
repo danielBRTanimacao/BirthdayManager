@@ -14,10 +14,19 @@
             [formGroup]="form"
             (ngSubmit)="submitBirthadayContent($event)"
         >
-            <div class="flex justify-center gap-2">
+            <div class="flex flex-col gap-2">
+                <label for="colorId">Escolha uma cor de fundo</label>
                 <input
                     type="color"
                     formControlName="colors"
+                    name="colors"
+                    id="colorId"
+                />
+
+                <label for="colorId">Cor do texto</label>
+                <input
+                    type="color"
+                    formControlName="textColor"
                     name="colors"
                     id="colorId"
                 />

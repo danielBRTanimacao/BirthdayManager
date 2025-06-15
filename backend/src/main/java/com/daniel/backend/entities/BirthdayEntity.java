@@ -31,6 +31,8 @@ public class BirthdayEntity {
 
     private String colors;
 
+    private String textColor;
+
     @CreationTimestamp
     private Timestamp createdDate;
 
@@ -41,6 +43,9 @@ public class BirthdayEntity {
     public void prePersist() {
         if (colors == null) {
             colors = "#fada7a";
+        }
+        if (textColor == null) {
+            textColor = "#fff";
         }
     }
 }

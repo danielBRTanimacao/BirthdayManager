@@ -4,10 +4,16 @@ import { ModalFormComponent } from '../../components/modal-form/modal-form.compo
 import { ModalConfigComponent } from '../../components/modal-config/modal-config.component';
 import { PostItComponent } from '../../components/post-it/post-it.component';
 import { Router } from '@angular/router';
+import { ModalEditableComponent } from '../../components/modal-editable/modal-editable.component';
 
 @Component({
     selector: 'app-main',
-    imports: [ModalFormComponent, ModalConfigComponent, PostItComponent],
+    imports: [
+        ModalFormComponent,
+        ModalConfigComponent,
+        PostItComponent,
+        ModalEditableComponent,
+    ],
     templateUrl: './main.component.html',
     styleUrl: './main.component.css',
 })

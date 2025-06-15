@@ -27,6 +27,7 @@ export class ModalFormComponent {
         birthday: new FormControl('', [Validators.required]),
         notes: new FormControl(''),
         colors: new FormControl(''),
+        textColor: new FormControl(''),
     });
 
     headers = new HttpHeaders({
@@ -42,7 +43,7 @@ export class ModalFormComponent {
             })
             .subscribe((res) => {
                 console.log('Enviado com sucesso', res);
-                this.router.navigate(['']);
+                this.router.navigate(['/auth']);
             });
     }
 }

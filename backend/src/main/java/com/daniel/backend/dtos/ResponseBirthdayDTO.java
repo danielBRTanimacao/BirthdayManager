@@ -7,6 +7,7 @@ public record ResponseBirthdayDTO(
         String birthday,
         String notes,
         String colors,
+        String textColor,
         LocalDateTime createdDate,
         LocalDateTime updatedDate) {
 }

@@ -24,14 +24,14 @@
     </a>
 </header>
 <main class="black-board h-canva text-white">
-    @for (data of dados; track dados.id) {
+    @for (item of data; track data.id) {
     <app-post-it
-        [name]="data.name"
-        [birthdayDate]="data.birthday"
-        [anotation]="data.notes"
-        [created]="data.createdDate"
-        [colors]="data.colors"
-        [textColor]="data.textColor"
+        [name]="item.name"
+        [birthdayDate]="item.birthday"
+        [anotation]="item.notes"
+        [created]="item.createdDate"
+        [colors]="item.colors"
+        [textColor]="item.textColor"
     />
     }
     <a
@@ -57,6 +57,54 @@
         <span>EDITAR</span>
     </a>
 </main>
-<app-modal-editable [data]="dados" />
-<app-modal-form />
-<app-modal-config />
+<app-modal-base [idOpenModal]="'createNoteModal'">
+    <form
+        class="flex flex-col gap-3"
+        [formGroup]="form"
+        (ngSubmit)="submitBirthadayContent($event)"
+    >
+        <div class="flex flex-col gap-2">
+            <label for="colorId">Escolha uma cor de fundo</label>
+            <input
+                type="color"
+                formControlName="colors"
+                name="colors"
+                id="colorId"
+            />
+
+            <label for="textColorId">Cor do texto</label>
+            <input
+                type="color"
+                formControlName="textColor"
+                name="textColor"
+                id="textColorId"
+            />
+        </div>
+        <input
+            type="text"
+            class="text-2xl font-bold outline-0 placeholder:opacity-50"
+            placeholder="Nome do aniversariante"
+            required
+            formControlName="name"
+        />
+        <input
+            type="text"
+            class="text-2xl font-bold outline-0 placeholder:opacity-50"
+            formControlName="birthday"
+            placeholder="dia-mês"
+            required
+        />
+        <input
+            type="text"
+            formControlName="notes"
+            placeholder="Informações extras"
+            class="w-full outline-0 placeholder:opacity-50"
+        />
+        <button
+            class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 cursor-pointer"
+            type="submit"
+        >
+            Lembrar
+        </button>
+    </form>
+</app-modal-base>

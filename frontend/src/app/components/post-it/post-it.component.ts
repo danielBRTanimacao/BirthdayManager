@@ -20,6 +20,18 @@ export class PostItComponent implements AfterViewInit {
 
     constructor(private el: ElementRef) {}
 
+    openEditable() {
+        const data = {
+            name: this.name,
+            birthdayDate: this.birthdayDate,
+            colors: this.colors,
+            textColor: this.textColor,
+            anotation: this.anotation,
+            created: this.created,
+        };
+        console.log('abriu');
+    }
+
     birthdayFormat() {
         const [month, day] = this.birthdayDate.split('-');
         return `${day}/${month}`;

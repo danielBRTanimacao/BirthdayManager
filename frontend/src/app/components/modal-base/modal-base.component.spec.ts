@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ModalEditableComponent } from './modal-editable.component';
+import { ModalBaseComponent } from './modal-base.component';
 
-describe('ModalEditableComponent', () => {
-  let component: ModalEditableComponent;
-  let fixture: ComponentFixture<ModalEditableComponent>;
+describe('ModalBaseComponent', () => {
+  let component: ModalBaseComponent;
+  let fixture: ComponentFixture<ModalBaseComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ModalEditableComponent]
+      imports: [ModalBaseComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ModalEditableComponent);
+    fixture = TestBed.createComponent(ModalBaseComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

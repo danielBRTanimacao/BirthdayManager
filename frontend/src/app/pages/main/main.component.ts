@@ -10,6 +10,8 @@ import {
     ReactiveFormsModule,
     Validators,
 } from '@angular/forms';
+import { BirthdayEntity } from '../../interfaces/BirthdayInterfaces';
+import { ModalService } from '../../services/ModalServices';
 
 @Component({
     selector: 'app-main',
@@ -21,8 +23,9 @@ export class MainComponent {
     httpClient = inject(HttpClient);
     router = inject(Router);
     birthdayService = inject(BirthdayService);
+    modalService = inject(ModalService);
     title = 'Lembrete aniversarios';
-    data: any;
+    data: BirthdayEntity | any;
 
     form = new FormGroup({
         userId: new FormControl({
@@ -36,15 +39,26 @@ export class MainComponent {
         textColor: new FormControl(''),
     });
 
+    showModal(name: string) {
+        if (name == 'createNote') {
+            this.modalService.modalOpen.create =
+                !this.modalService.modalOpen.create;
+        } else if (name == 'config') {
+            this.modalService.modalOpen.config =
+                !this.modalService.modalOpen.config;
+        } else if (name == 'editable') {
+            this.modalService.modalOpen.editable =
+                !this.modalService.modalOpen.editable;
+        }
+    }
+
     constructor() {
         this.birthdayService.getBirthdays().subscribe({
             next: (res) => {
                 this.data = res;
-                console.log('Aniversários:', res);
             },
-            error: (err) => {
+            error: () => {
                 localStorage.removeItem('token');
-                console.error(err);
             },
         });
     }

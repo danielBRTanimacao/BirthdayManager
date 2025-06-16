@@ -1,0 +1,5 @@
+<app-paper-anim [hidden]="!playAnim" (animationDone)="onPaperAnimDone()" />
+
+<app-login [hidden]="!showLogin" (pageChange)="toggleMode()" />
+
+<app-register [hidden]="showLogin" (pageChange)="toggleMode()" />

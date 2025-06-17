@@ -4,12 +4,7 @@ import { PostItComponent } from '../../components/post-it/post-it.component';
 import { Router } from '@angular/router';
 import { ModalBaseComponent } from '../../components/modal-base/modal-base.component';
 import { BirthdayService } from '../../services/BirthdayServices';
-import {
-    FormControl,
-    FormGroup,
-    ReactiveFormsModule,
-    Validators,
-} from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BirthdayEntity } from '../../interfaces/BirthdayInterfaces';
 import { ModalService } from '../../services/ModalServices';
 
@@ -27,30 +22,9 @@ export class MainComponent {
     title = 'Lembrete aniversarios';
     data: BirthdayEntity | any;
 
-    form = new FormGroup({
-        userId: new FormControl({
-            value: localStorage.getItem('userId'),
-            disabled: false,
-        }),
-        name: new FormControl('', Validators.required),
-        birthday: new FormControl('', [Validators.required]),
-        notes: new FormControl(''),
-        colors: new FormControl(''),
-        textColor: new FormControl(''),
-    });
+    form = this.birthdayService.form;
 
-    showModal(name: string) {
-        if (name == 'createNote') {
-            this.modalService.modalOpen.create =
-                !this.modalService.modalOpen.create;
-        } else if (name == 'config') {
-            this.modalService.modalOpen.config =
-                !this.modalService.modalOpen.config;
-        } else if (name == 'editable') {
-            this.modalService.modalOpen.editable =
-                !this.modalService.modalOpen.editable;
-        }
-    }
+    renderForm = 'a';
 
     constructor() {
         this.birthdayService.getBirthdays().subscribe({
@@ -66,5 +40,10 @@ export class MainComponent {
     submitBirthadayContent(event: Event) {
         event.preventDefault();
         this.birthdayService.postBirthday(this.form);
+    }
+
+    updateBirthadayContent(event: Event) {
+        event.preventDefault();
+        this.birthdayService.updateBirthday(this.form);
     }
 }

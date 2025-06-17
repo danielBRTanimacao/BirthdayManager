@@ -3,13 +3,13 @@
 >
     <div class="hidden-section"></div>
     <button
-        (click)="showModal('createNote')"
+        (click)="modalService.showModal('createNote')"
         class="cursor-pointer text-3xl transition-transform duration-300 hover:scale-110 hover:text-gray-800 text-center"
     >
         Adicionar lembrete
     </button>
     <button
-        (click)="showModal('config')"
+        (click)="modalService.showModal('config')"
         class="cursor-pointer hover:text-gray-800"
     >
         <svg
@@ -39,8 +39,8 @@
     }
 </main>
 <app-modal-base
-    [isOpen]="modalService.modalOpen.create"
-    [close]="showModal.bind(this, 'createNote')"
+    [isOpen]="modalService.modalOpen.createNote"
+    [close]="modalService.showModal.bind(this, 'createNote')"
 >
     <form
         class="flex flex-col gap-3"
@@ -94,7 +94,7 @@
 </app-modal-base>
 <app-modal-base
     [isOpen]="modalService.modalOpen.config"
-    [close]="showModal.bind(this, 'config')"
+    [close]="modalService.showModal.bind(this, 'config')"
 >
     <h1 class="text-2xl text-center pb-3">Alguns links</h1>
     <ul class="flex justify-evenly">
@@ -165,55 +165,7 @@
 </app-modal-base>
 <app-modal-base
     [isOpen]="modalService.modalOpen.editable"
-    [close]="showModal.bind(this, 'editable')"
+    [close]="modalService.showModal.bind(this, 'editable')"
 >
-    <form
-        class="flex flex-col gap-3"
-        [formGroup]="form"
-        (ngSubmit)="submitBirthadayContent($event)"
-    >
-        <div class="flex flex-col gap-2">
-            <label for="colorId">Escolha uma cor de fundo</label>
-            <input
-                type="color"
-                formControlName="colors"
-                name="colors"
-                id="colorId"
-            />
-
-            <label for="textColorId">Cor do texto</label>
-            <input
-                type="color"
-                formControlName="textColor"
-                name="textColor"
-                id="textColorId"
-            />
-        </div>
-        <input
-            type="text"
-            class="text-2xl font-bold outline-0 placeholder:opacity-50"
-            placeholder="Nome do aniversariante"
-            required
-            formControlName="name"
-        />
-        <input
-            type="text"
-            class="text-2xl font-bold outline-0 placeholder:opacity-50"
-            formControlName="birthday"
-            placeholder="dia-mês"
-            required
-        />
-        <input
-            type="text"
-            formControlName="notes"
-            placeholder="Informações extras"
-            class="w-full outline-0 placeholder:opacity-50"
-        />
-        <button
-            class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 cursor-pointer"
-            type="submit"
-        >
-            Lembrar
-        </button>
-    </form>
+    {{ renderForm }}
 </app-modal-base>

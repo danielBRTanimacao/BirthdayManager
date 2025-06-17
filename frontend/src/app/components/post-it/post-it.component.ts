@@ -1,4 +1,11 @@
-import { Component, Input, ElementRef, AfterViewInit } from '@angular/core';
+import {
+    Component,
+    Input,
+    ElementRef,
+    AfterViewInit,
+    inject,
+} from '@angular/core';
+import { ModalService } from '../../services/ModalServices';
 
 @Component({
     selector: 'app-post-it',
@@ -7,6 +14,8 @@ import { Component, Input, ElementRef, AfterViewInit } from '@angular/core';
     styleUrl: './post-it.component.css',
 })
 export class PostItComponent implements AfterViewInit {
+    modalService = inject(ModalService);
+
     @Input() name!: string;
     @Input() birthdayDate!: string;
     @Input() colors!: string;
@@ -29,7 +38,7 @@ export class PostItComponent implements AfterViewInit {
             anotation: this.anotation,
             created: this.created,
         };
-        console.log('abriu');
+        this.modalService.showModal('editable');
     }
 
     birthdayFormat() {

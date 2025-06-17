@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 
+type ModalType = 'createNote' | 'config' | 'editable';
+
 @Injectable({
     providedIn: 'root',
 })
 export class ModalService {
-    public modalOpen = {
+    public modalOpen: Record<ModalType, boolean> = {
         config: false,
-        create: false,
+        createNote: false,
         editable: false,
     };
 
@@ -14,11 +16,15 @@ export class ModalService {
 
     showModal(name: string) {
         if (name == 'createNote') {
-            this.modalOpen.create = !this.modalOpen.create;
+            this.modalOpen.createNote = !this.modalOpen.createNote;
         } else if (name == 'config') {
             this.modalOpen.config = !this.modalOpen.config;
         } else if (name == 'editable') {
             this.modalOpen.editable = !this.modalOpen.editable;
         }
+    }
+
+    renderForm(data: any) {
+        return data;
     }
 }

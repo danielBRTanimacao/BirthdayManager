@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Injectable({
     providedIn: 'root',
@@ -8,6 +8,18 @@ import { FormGroup } from '@angular/forms';
 export class BirthdayService {
     private headers: HttpHeaders;
     private URL_API: string = 'http://127.0.0.1:8080/api';
+
+    public form = new FormGroup({
+        userId: new FormControl({
+            value: localStorage.getItem('userId'),
+            disabled: false,
+        }),
+        name: new FormControl('', Validators.required),
+        birthday: new FormControl('', [Validators.required]),
+        notes: new FormControl(''),
+        colors: new FormControl(''),
+        textColor: new FormControl(''),
+    });
 
     constructor(private client: HttpClient) {
         const token = localStorage.getItem('token');
@@ -34,11 +46,17 @@ export class BirthdayService {
             });
     }
 
-    updateBirthday() {
-        console.log('update');
+    updateBirthday(form: FormGroup) {
+        this.client
+            .put(`${this.URL_API}/birthday/${1}`, form.value, {
+                headers: this.headers,
+            })
+            .subscribe({
+                error: (err) => {
+                    console.log(err);
+                },
+            });
     }
 
-    delBirthday() {
-        console.log('destruido');
-    }
+    delBirthday() {}
 }

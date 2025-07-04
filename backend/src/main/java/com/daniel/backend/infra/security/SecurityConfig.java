@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/api/user/**").permitAll()
                         .anyRequest().authenticated()
-                ).logout(logout -> logout.logoutUrl("/api/user/logout"))
+                )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

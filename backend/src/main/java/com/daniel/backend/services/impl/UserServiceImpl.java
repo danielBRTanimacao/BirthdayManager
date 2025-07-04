@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -43,5 +44,12 @@ public class UserServiceImpl implements UserService {
         String token = tokenService.generateToken(user);
 
         return new ResponseTokenDTO(user.getId(), user.getEmail(), token);
+    }
+
+    @Override
+    public void logout(Long id) {
+        UserEntity user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid id or notFound"));
+        tokenService.removeToken(user);
     }
 }

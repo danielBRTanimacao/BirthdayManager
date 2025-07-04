@@ -1,6 +1,7 @@
 package com.daniel.backend.exceptions;
 
 import org.postgresql.util.PSQLException;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;

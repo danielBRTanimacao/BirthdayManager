@@ -25,4 +25,10 @@ public class UserControllerImpl implements UserController {
     public ResponseEntity<ResponseTokenDTO> loginUser(RequestLoginDTO dto) {
         return ResponseEntity.ok(userService.login(dto));
     }
+
+    @Override
+    public ResponseEntity<?> logoutUser(Long id) {
+        userService.logout(id);
+        return ResponseEntity.ok().body("Log out");
+    }
 }

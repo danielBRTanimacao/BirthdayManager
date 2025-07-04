@@ -6,8 +6,6 @@ import com.daniel.backend.dtos.loginDTOs.ResponseTokenDTO;
 import com.daniel.backend.dtos.loginDTOs.RequestLoginDTO;
 import com.daniel.backend.dtos.createUserDTOs.ResponseUserDTO;
 import com.daniel.backend.services.UserService;
-import com.daniel.backend.services.impl.UserServiceImpl;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

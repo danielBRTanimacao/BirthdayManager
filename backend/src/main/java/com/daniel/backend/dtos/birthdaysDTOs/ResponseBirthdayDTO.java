@@ -1,4 +1,4 @@
-package com.daniel.backend.dtos;
+package com.daniel.backend.dtos.birthdaysDTOs;
 
 import java.time.LocalDateTime;
 

@@ -1,22 +1,13 @@
 package com.daniel.backend.controllers;
 
-import com.daniel.backend.dtos.RequestEmailDTO;
-import com.daniel.backend.dtos.ResponseEmailDTO;
-import com.daniel.backend.services.EmailService;
-import lombok.RequiredArgsConstructor;
+import com.daniel.backend.dtos.emailDTOs.RequestEmailDTO;
+import com.daniel.backend.dtos.emailDTOs.ResponseEmailDTO;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
 @RequestMapping("/api/mail")
-@RequiredArgsConstructor
-public class EmailController {
-    private final EmailService emailService;
-
+public interface EmailController {
     @PostMapping("/send")
-    public ResponseEmailDTO sendingMail(@RequestBody RequestEmailDTO emailDetails) {
-        return emailService.sendEmail(emailDetails);
-    }
+    ResponseEmailDTO sendingMail(@RequestBody RequestEmailDTO emailDetails);
 }

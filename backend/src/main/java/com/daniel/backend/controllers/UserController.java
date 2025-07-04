@@ -1,31 +1,20 @@
 package com.daniel.backend.controllers;
 
-import com.daniel.backend.dtos.RequestUserDTO;
-import com.daniel.backend.dtos.ResponseTokenDTO;
-import com.daniel.backend.dtos.RequestLoginDTO;
-import com.daniel.backend.dtos.ResponseUserDTO;
-import com.daniel.backend.repositories.UserRepository;
-import com.daniel.backend.services.UserService;
+import com.daniel.backend.dtos.createUserDTOs.RequestUserDTO;
+import com.daniel.backend.dtos.createUserDTOs.ResponseUserDTO;
+import com.daniel.backend.dtos.loginDTOs.RequestLoginDTO;
+import com.daniel.backend.dtos.loginDTOs.ResponseTokenDTO;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-@RestController
 @RequestMapping("/api/user")
-@RequiredArgsConstructor
-public class UserController {
-    private final UserRepository userRepository;
-    private final UserService userService;
-
+public interface UserController {
     @PostMapping("/create")
-    public ResponseEntity<ResponseUserDTO> createUser(@Valid @RequestBody RequestUserDTO dto) {
-        return new ResponseEntity<>(userService.create(dto), HttpStatus.CREATED);
-    }
+    ResponseEntity<ResponseUserDTO> createUser(@Valid @RequestBody RequestUserDTO dto);
 
     @PostMapping("/login")
-    public ResponseEntity<ResponseTokenDTO> loginUser(@Valid @RequestBody RequestLoginDTO dto) {
-        return ResponseEntity.ok(userService.login(dto));
-    }
+    ResponseEntity<ResponseTokenDTO> loginUser(@Valid @RequestBody RequestLoginDTO dto);
 }

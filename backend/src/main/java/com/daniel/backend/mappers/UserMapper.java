@@ -1,7 +1,7 @@
 package com.daniel.backend.mappers;
 
-import com.daniel.backend.dtos.RequestUserDTO;
-import com.daniel.backend.dtos.ResponseUserDTO;
+import com.daniel.backend.dtos.createUserDTOs.RequestUserDTO;
+import com.daniel.backend.dtos.createUserDTOs.ResponseUserDTO;
 import com.daniel.backend.entities.UserEntity;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;

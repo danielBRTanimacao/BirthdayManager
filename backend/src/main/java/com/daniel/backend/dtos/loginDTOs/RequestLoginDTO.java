@@ -1,4 +1,4 @@
-package com.daniel.backend.dtos;
+package com.daniel.backend.dtos.loginDTOs;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;

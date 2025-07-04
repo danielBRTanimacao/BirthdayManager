@@ -1,4 +1,4 @@
-package com.daniel.backend.dtos;
+package com.daniel.backend.dtos.emailDTOs;
 
 import jakarta.validation.constraints.NotBlank;
 

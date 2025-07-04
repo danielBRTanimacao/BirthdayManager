@@ -1,8 +1,8 @@
 package com.daniel.backend.mappers;
 
 import com.daniel.backend.components.UserMapperHelper;
-import com.daniel.backend.dtos.ResponseBirthdayDTO;
-import com.daniel.backend.dtos.RequestBirthdayDTO;
+import com.daniel.backend.dtos.birthdaysDTOs.ResponseBirthdayDTO;
+import com.daniel.backend.dtos.birthdaysDTOs.RequestBirthdayDTO;
 import com.daniel.backend.entities.BirthdayEntity;
 import org.mapstruct.*;
 

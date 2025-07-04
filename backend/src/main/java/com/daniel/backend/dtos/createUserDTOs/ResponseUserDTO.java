@@ -1,4 +1,4 @@
-package com.daniel.backend.dtos;
+package com.daniel.backend.dtos.createUserDTOs;
 
 import java.time.LocalDateTime;
 

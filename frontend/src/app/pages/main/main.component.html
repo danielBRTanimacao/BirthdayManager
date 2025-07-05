@@ -29,14 +29,22 @@
 <main class="black-board h-canva text-white">
     @for (item of data; track data.id) {
     <app-post-it
-        (click)="renderOpenModal(item.id)"
         [name]="item.name"
         [birthdayDate]="item.birthday"
         [anotation]="item.notes"
         [created]="item.createdDate"
         [colors]="item.colors"
         [textColor]="item.textColor"
-    />
+    >
+        <ng-content>
+            <img
+                (click)="renderOpenModal(item)"
+                class="absolute top-0 w-8"
+                src="https://cdn.pixabay.com/photo/2013/07/12/14/10/pushpin-147918_1280.png"
+                alt=""
+            />
+        </ng-content>
+    </app-post-it>
     }
 </main>
 <app-modal-base [isOpen]="modalOpen.createNote">

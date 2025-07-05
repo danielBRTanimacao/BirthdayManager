@@ -7,7 +7,6 @@ import {
     inject,
     Renderer2,
 } from '@angular/core';
-import { ModalService } from '../../services/ModalService';
 
 @Component({
     selector: 'app-post-it',
@@ -16,7 +15,6 @@ import { ModalService } from '../../services/ModalService';
     styleUrls: ['./post-it.component.css'],
 })
 export class PostItComponent implements AfterViewInit, OnDestroy {
-    modalService = inject(ModalService);
     private renderer = inject(Renderer2);
 
     @Input() name!: string;
@@ -34,18 +32,6 @@ export class PostItComponent implements AfterViewInit, OnDestroy {
     private unlistenUp!: () => void;
 
     constructor(private el: ElementRef) {}
-
-    openEditable() {
-        const data = {
-            name: this.name,
-            birthdayDate: this.birthdayDate,
-            colors: this.colors,
-            textColor: this.textColor,
-            anotation: this.anotation,
-            created: this.created,
-        };
-        this.modalService.showModal('editable');
-    }
 
     birthdayFormat() {
         if (!this.birthdayDate) return '';
@@ -77,7 +63,6 @@ export class PostItComponent implements AfterViewInit, OnDestroy {
                 this.onTouchStart.bind(this)
             );
 
-            // Melhoria de acessibilidade
             this.renderer.setAttribute(this.dragElement, 'tabindex', '0');
             this.renderer.setAttribute(this.dragElement, 'role', 'application');
             this.renderer.setAttribute(
@@ -118,7 +103,6 @@ export class PostItComponent implements AfterViewInit, OnDestroy {
         this.offsetX = clientX - rect.left;
         this.offsetY = clientY - rect.top;
 
-        // Usa Renderer2 para melhor compatibilidade
         this.unlistenMove = this.renderer.listen(
             document,
             'mousemove',

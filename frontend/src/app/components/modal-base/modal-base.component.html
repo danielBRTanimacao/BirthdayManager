@@ -1,10 +1,10 @@
 <div
     class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 transition-all duration-300"
-    [class]="{
-        'opacity-100 pointer-events-auto': isOpen,
-        'opacity-0 pointer-events-none': !isOpen
-    }"
-    (click)="closeModal()"
+    [class]="
+        isOpen
+            ? 'opacity-100 pointer-events-auto'
+            : 'opacity-0 pointer-events-none'
+    "
 >
     <div
         class="bg-white p-6 rounded-xl shadow-lg w-[90%] max-w-md relative transform transition-transform duration-300"
@@ -12,7 +12,6 @@
             'translate-y-0': isOpen,
             '-translate-y-4': !isOpen
         }"
-        (click)="$event.stopPropagation()"
     >
         <button
             (click)="closeModal()"

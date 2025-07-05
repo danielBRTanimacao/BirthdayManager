@@ -3,13 +3,13 @@
 >
     <div class="hidden-section"></div>
     <button
-        (click)="modalService.showModal('createNote')"
+        (click)="openModal('createNote')"
         class="cursor-pointer text-3xl transition-transform duration-300 hover:scale-110 hover:text-gray-800 text-center"
     >
         Adicionar lembrete
     </button>
     <button
-        (click)="modalService.showModal('config')"
+        (click)="openModal('config')"
         class="cursor-pointer hover:text-gray-800"
     >
         <svg
@@ -29,6 +29,7 @@
 <main class="black-board h-canva text-white">
     @for (item of data; track data.id) {
     <app-post-it
+        (click)="renderOpenModal(item.id)"
         [name]="item.name"
         [birthdayDate]="item.birthday"
         [anotation]="item.notes"
@@ -38,10 +39,7 @@
     />
     }
 </main>
-<app-modal-base
-    [isOpen]="modalService.modalOpen.createNote"
-    [nameModal]="'createNote'"
->
+<app-modal-base [isOpen]="modalOpen.createNote">
     <form
         class="flex flex-col gap-3"
         [formGroup]="form"
@@ -92,7 +90,7 @@
         </button>
     </form>
 </app-modal-base>
-<app-modal-base [isOpen]="modalService.modalOpen.config" [nameModal]="'config'">
+<app-modal-base [isOpen]="modalOpen.config">
     <h1 class="text-2xl text-center pb-3">Alguns links</h1>
     <ul class="flex justify-evenly">
         <li>
@@ -160,9 +158,6 @@
         </li>
     </ul>
 </app-modal-base>
-<app-modal-base
-    [isOpen]="modalService.modalOpen.editable"
-    [nameModal]="'editable'"
->
+<app-modal-base [isOpen]="modalOpen.editable">
     {{ renderForm }}
 </app-modal-base>

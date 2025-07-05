@@ -9,6 +9,4 @@ public interface UserService {
     ResponseUserDTO create(RequestUserDTO userDTO);
 
     ResponseTokenDTO login(RequestLoginDTO userDTO);
-
-    void logout(Long id);
 }

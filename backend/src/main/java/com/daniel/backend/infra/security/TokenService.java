@@ -3,7 +3,6 @@ package com.daniel.backend.infra.security;
 import java.time.*;
 
 import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
@@ -29,10 +28,6 @@ public class TokenService {
         } catch (JWTCreationException e) {
             throw new RuntimeException("Error while authenticating");
         }
-    }
-
-    public void removeToken(UserEntity user) {
-         // Ajeitar isso aqui esse djabo
     }
 
     public String validateToken(String token) {

@@ -40,7 +40,7 @@ public class BirthdayEntity {
     private Timestamp updatedDate;
 
     @PrePersist
-    public void prePersist() {
+    public void setColorsAndText() {
         if (colors == null) {
             colors = "#fada7a";
         }

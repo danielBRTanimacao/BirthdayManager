@@ -1,11 +1,22 @@
 <div
     class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 transition-all duration-300"
-    [class]="isOpen ? 'cursor-pointer' : 'opacity-0 pointer-events-none'"
+    [class]="{
+        'opacity-100 pointer-events-auto': isOpen,
+        'opacity-0 pointer-events-none': !isOpen
+    }"
+    (click)="closeModal()"
 >
-    <div class="bg-white p-6 rounded-xl shadow-lg w-[90%] max-w-md relative">
+    <div
+        class="bg-white p-6 rounded-xl shadow-lg w-[90%] max-w-md relative transform transition-transform duration-300"
+        [class]="{
+            'translate-y-0': isOpen,
+            '-translate-y-4': !isOpen
+        }"
+        (click)="$event.stopPropagation()"
+    >
         <button
-            (click)="close()"
-            class="cursor-pointer absolute top-2 right-3 text-gray-500 text-xl hover:text-red-500"
+            (click)="closeModal()"
+            class="cursor-pointer absolute top-2 right-3 text-gray-500 text-xl hover:text-red-500 transition-colors"
         >
             &times;
         </button>

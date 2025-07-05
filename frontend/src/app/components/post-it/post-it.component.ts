@@ -3,18 +3,21 @@ import {
     Input,
     ElementRef,
     AfterViewInit,
+    OnDestroy,
     inject,
+    Renderer2,
 } from '@angular/core';
-import { ModalService } from '../../services/ModalServices';
+import { ModalService } from '../../services/ModalService';
 
 @Component({
     selector: 'app-post-it',
     standalone: true,
     templateUrl: './post-it.component.html',
-    styleUrl: './post-it.component.css',
+    styleUrls: ['./post-it.component.css'],
 })
-export class PostItComponent implements AfterViewInit {
+export class PostItComponent implements AfterViewInit, OnDestroy {
     modalService = inject(ModalService);
+    private renderer = inject(Renderer2);
 
     @Input() name!: string;
     @Input() birthdayDate!: string;
@@ -26,6 +29,9 @@ export class PostItComponent implements AfterViewInit {
     private dragging = false;
     private offsetX = 0;
     private offsetY = 0;
+    private dragElement!: HTMLElement;
+    private unlistenMove!: () => void;
+    private unlistenUp!: () => void;
 
     constructor(private el: ElementRef) {}
 
@@ -42,6 +48,7 @@ export class PostItComponent implements AfterViewInit {
     }
 
     birthdayFormat() {
+        if (!this.birthdayDate) return '';
         const [month, day] = this.birthdayDate.split('-');
         return `${day}/${month}`;
     }
@@ -56,50 +63,134 @@ export class PostItComponent implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-        const el = this.el.nativeElement.querySelector('.draggable');
-        el.addEventListener('mousedown', this.onMouseDown.bind(this));
+        this.dragElement = this.el.nativeElement.querySelector('.draggable');
+
+        if (this.dragElement) {
+            this.renderer.listen(
+                this.dragElement,
+                'mousedown',
+                this.onMouseDown.bind(this)
+            );
+            this.renderer.listen(
+                this.dragElement,
+                'touchstart',
+                this.onTouchStart.bind(this)
+            );
+
+            // Melhoria de acessibilidade
+            this.renderer.setAttribute(this.dragElement, 'tabindex', '0');
+            this.renderer.setAttribute(this.dragElement, 'role', 'application');
+            this.renderer.setAttribute(
+                this.dragElement,
+                'aria-label',
+                'Post-it arrastável'
+            );
+        }
+    }
+
+    ngOnDestroy() {
+        this.removeDocumentListeners();
+    }
+
+    private removeDocumentListeners() {
+        if (this.unlistenMove) this.unlistenMove();
+        if (this.unlistenUp) this.unlistenUp();
     }
 
     onMouseDown(event: MouseEvent) {
-        this.dragging = true;
-        const element = this.el.nativeElement.querySelector('.draggable');
-        element.classList.add('cursor-grabbing');
-        const rect = element.getBoundingClientRect();
-
-        this.offsetX = event.clientX - rect.left;
-        this.offsetY = event.clientY - rect.top;
-
-        document.addEventListener('mousemove', this.onMouseMove);
-        document.addEventListener('mouseup', this.onMouseUp);
+        this.startDrag(event.clientX, event.clientY);
     }
 
-    onMouseMove = (event: MouseEvent) => {
-        if (!this.dragging) return;
+    onTouchStart(event: TouchEvent) {
+        if (event.touches.length > 0) {
+            this.startDrag(event.touches[0].clientX, event.touches[0].clientY);
+            event.preventDefault();
+        }
+    }
 
-        const main = document.querySelector('main.black-board')!;
+    private startDrag(clientX: number, clientY: number) {
+        if (!this.dragElement) return;
+
+        this.dragging = true;
+        this.renderer.addClass(this.dragElement, 'cursor-grabbing');
+        const rect = this.dragElement.getBoundingClientRect();
+
+        this.offsetX = clientX - rect.left;
+        this.offsetY = clientY - rect.top;
+
+        // Usa Renderer2 para melhor compatibilidade
+        this.unlistenMove = this.renderer.listen(
+            document,
+            'mousemove',
+            this.onMove.bind(this)
+        );
+        this.unlistenUp = this.renderer.listen(
+            document,
+            'mouseup',
+            this.onEndDrag.bind(this)
+        );
+
+        this.renderer.listen(
+            document,
+            'touchmove',
+            this.onTouchMove.bind(this)
+        );
+        this.renderer.listen(document, 'touchend', this.onEndDrag.bind(this));
+    }
+
+    private onMove(event: MouseEvent) {
+        this.updatePosition(event.clientX, event.clientY);
+    }
+
+    private onTouchMove(event: TouchEvent) {
+        if (event.touches.length > 0) {
+            this.updatePosition(
+                event.touches[0].clientX,
+                event.touches[0].clientY
+            );
+            event.preventDefault();
+        }
+    }
+
+    private updatePosition(clientX: number, clientY: number) {
+        if (!this.dragging || !this.dragElement) return;
+
+        const main = document.querySelector('main.black-board');
+        if (!main) return;
+
         const mainRect = main.getBoundingClientRect();
 
-        const element = this.el.nativeElement.querySelector('.draggable');
-
-        let left = event.clientX - mainRect.left - this.offsetX;
-        let top = event.clientY - mainRect.top - this.offsetY;
+        let left = clientX - mainRect.left - this.offsetX;
+        let top = clientY - mainRect.top - this.offsetY;
 
         left = Math.max(
             0,
-            Math.min(left, mainRect.width - element.offsetWidth)
+            Math.min(left, mainRect.width - this.dragElement.offsetWidth)
         );
         top = Math.max(
             0,
-            Math.min(top, mainRect.height - element.offsetHeight)
+            Math.min(top, mainRect.height - this.dragElement.offsetHeight)
         );
 
-        element.style.left = `${left}px`;
-        element.style.top = `${top}px`;
-    };
+        this.renderer.setStyle(this.dragElement, 'left', `${left}px`);
+        this.renderer.setStyle(this.dragElement, 'top', `${top}px`);
+    }
 
-    onMouseUp = () => {
+    private onEndDrag() {
+        if (!this.dragging) return;
+
         this.dragging = false;
-        document.removeEventListener('mousemove', this.onMouseMove);
-        document.removeEventListener('mouseup', this.onMouseUp);
-    };
+        this.renderer.removeClass(this.dragElement, 'cursor-grabbing');
+        this.removeDocumentListeners();
+
+        this.savePosition();
+    }
+
+    private savePosition() {
+        const position = {
+            left: this.dragElement.style.left,
+            top: this.dragElement.style.top,
+        };
+        console.log('Posição salva:', position);
+    }
 }

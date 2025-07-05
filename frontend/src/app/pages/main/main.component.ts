@@ -4,9 +4,9 @@ import { PostItComponent } from '../../components/post-it/post-it.component';
 import { Router } from '@angular/router';
 import { ModalBaseComponent } from '../../components/modal-base/modal-base.component';
 import { BirthdayService } from '../../services/BirthdayServices';
+import { ModalService } from '../../services/ModalService';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BirthdayEntity } from '../../interfaces/BirthdayInterfaces';
-import { ModalService } from '../../services/ModalServices';
 
 @Component({
     selector: 'app-main',

@@ -45,11 +45,4 @@ public class UserServiceImpl implements UserService {
 
         return new ResponseTokenDTO(user.getId(), user.getEmail(), token);
     }
-
-    @Override
-    public void logout(Long id) {
-        UserEntity user = userRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid id or notFound"));
-        tokenService.removeToken(user);
-    }
 }

@@ -40,7 +40,7 @@
 </main>
 <app-modal-base
     [isOpen]="modalService.modalOpen.createNote"
-    [close]="modalService.showModal.bind(this, 'createNote')"
+    [nameModal]="'createNote'"
 >
     <form
         class="flex flex-col gap-3"
@@ -92,10 +92,7 @@
         </button>
     </form>
 </app-modal-base>
-<app-modal-base
-    [isOpen]="modalService.modalOpen.config"
-    [close]="modalService.showModal.bind(this, 'config')"
->
+<app-modal-base [isOpen]="modalService.modalOpen.config" [nameModal]="'config'">
     <h1 class="text-2xl text-center pb-3">Alguns links</h1>
     <ul class="flex justify-evenly">
         <li>
@@ -165,7 +162,7 @@
 </app-modal-base>
 <app-modal-base
     [isOpen]="modalService.modalOpen.editable"
-    [close]="modalService.showModal.bind(this, 'editable')"
+    [nameModal]="'editable'"
 >
     {{ renderForm }}
 </app-modal-base>

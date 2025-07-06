@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, inject } from '@angular/core';
 import { PostItComponent } from '../../components/post-it/post-it.component';
 import { Router } from '@angular/router';
 import { ModalBaseComponent } from '../../components/modal-base/modal-base.component';
@@ -24,6 +24,8 @@ export class MainComponent {
 
     form = this.birthdayService.form;
 
+    errorCreatePostIt: String = '';
+
     renderForm = 'Error';
 
     modalOpen = {
@@ -47,14 +49,26 @@ export class MainComponent {
         this.modalOpen[modalName] = !this.modalOpen[modalName];
     }
 
-    renderOpenModal(idItem: string) {
+    renderOpenModal(item: any) {
         this.openModal('editable');
-        this.renderForm = idItem;
+        this.renderForm = item.name;
     }
 
     submitBirthadayContent(event: Event) {
+        this.errorCreatePostIt = '';
         event.preventDefault();
-        this.birthdayService.postBirthday(this.form);
+        this.birthdayService.postBirthday(this.form).subscribe({
+            next: () => {
+                this.errorCreatePostIt =
+                    '<p class="text-green-500">Salvando...</p>';
+                location.reload();
+            },
+            error: (err) => {
+                for (const [key, item] of Object.entries(err.error)) {
+                    this.errorCreatePostIt += `<p>${key}: ${item}</p>`;
+                }
+            },
+        });
     }
 
     updateBirthadayContent(event: Event) {

@@ -6,7 +6,7 @@
         (click)="openModal('createNote')"
         class="cursor-pointer text-3xl transition-transform duration-300 hover:scale-110 hover:text-gray-800 text-center"
     >
-        Adicionar lembrete
+        +Adicionar lembrete
     </button>
     <button
         (click)="openModal('config')"
@@ -53,22 +53,27 @@
         [formGroup]="form"
         (ngSubmit)="submitBirthadayContent($event)"
     >
-        <div class="flex flex-col gap-2">
-            <label for="colorId">Escolha uma cor de fundo</label>
-            <input
-                type="color"
-                formControlName="colors"
-                name="colors"
-                id="colorId"
-            />
-
-            <label for="textColorId">Cor do texto</label>
-            <input
-                type="color"
-                formControlName="textColor"
-                name="textColor"
-                id="textColorId"
-            />
+        <div class="flex justify-evenly gap-2">
+            <div class="flex flex-col items-center">
+                <label class="opacity-50" for="colorId"
+                    >Escolha uma cor de fundo</label
+                >
+                <input
+                    type="color"
+                    formControlName="colors"
+                    name="colors"
+                    id="colorId"
+                />
+            </div>
+            <div class="flex flex-col items-center">
+                <label class="opacity-50" for="textColorId">Cor do texto</label>
+                <input
+                    type="color"
+                    formControlName="textColor"
+                    name="textColor"
+                    id="textColorId"
+                />
+            </div>
         </div>
         <input
             type="text"
@@ -90,6 +95,7 @@
             placeholder="Informações extras"
             class="w-full outline-0 placeholder:opacity-50"
         />
+        <div class="text-red-500" [innerHTML]="errorCreatePostIt"></div>
         <button
             class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 cursor-pointer"
             type="submit"

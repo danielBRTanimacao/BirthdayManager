@@ -26,17 +26,28 @@ export class RegisterComponent {
         password: new FormControl('', [Validators.required]),
     });
 
+    errorSubmit = '';
+
     changeToLogin() {
         this.pageChange.emit();
     }
 
     submitDataRegister(event: Event) {
         event.preventDefault();
+        this.errorSubmit = '';
 
         this.httpClient
             .post('http://127.0.0.1:8080/api/user/create', this.form.value)
-            .subscribe(() => {
-                this.router.navigate(['/login']);
+            .subscribe({
+                next: () => {
+                    this.errorSubmit = '';
+                    this.router.navigate(['/auth']);
+                },
+                error: (err) => {
+                    for (const [key, item] of Object.entries(err.error)) {
+                        this.errorSubmit += `<p>${key}: ${item}</p>`;
+                    }
+                },
             });
     }
 }

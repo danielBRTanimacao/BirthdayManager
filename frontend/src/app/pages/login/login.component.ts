@@ -32,18 +32,22 @@ export class LoginComponent {
 
     submitDataLogin(event: Event) {
         event.preventDefault();
+        this.errorSubmit = '';
 
         this.httpClient
             .post('http://127.0.0.1:8080/api/user/login', this.form.value)
             .subscribe({
                 next: (response: any) => {
+                    this.errorSubmit = '';
                     localStorage.setItem('token', response.token);
                     localStorage.setItem('userId', response.id);
                     localStorage.setItem('mail', response.email);
                     this.router.navigate(['']);
                 },
                 error: (err) => {
-                    this.errorSubmit = err.error.error;
+                    for (const [key, item] of Object.entries(err.error)) {
+                        this.errorSubmit += `<p>${key}: ${item}</p>`;
+                    }
                 },
             });
     }

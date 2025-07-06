@@ -19,8 +19,10 @@ public record RequestBirthdayDTO(
 
         String notes,
 
+        @NotBlank
         String colors,
 
+        @NotBlank
         String textColor
 
 ) {

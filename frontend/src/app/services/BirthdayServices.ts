@@ -35,15 +35,9 @@ export class BirthdayService {
     }
 
     postBirthday(form: FormGroup) {
-        this.client
-            .post(`${this.URL_API}/birthday/add`, form.value, {
-                headers: this.headers,
-            })
-            .subscribe({
-                error: (err) => {
-                    console.log(err);
-                },
-            });
+        return this.client.post(`${this.URL_API}/birthday/add`, form.value, {
+            headers: this.headers,
+        });
     }
 
     updateBirthday(form: FormGroup) {

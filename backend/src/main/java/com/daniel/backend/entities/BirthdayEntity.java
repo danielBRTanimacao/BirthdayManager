@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -39,13 +40,4 @@ public class BirthdayEntity {
     @UpdateTimestamp
     private Timestamp updatedDate;
 
-    @PrePersist
-    public void setColorsAndText() {
-        if (colors == null) {
-            colors = "#fada7a";
-        }
-        if (textColor == null) {
-            textColor = "#fff";
-        }
-    }
 }

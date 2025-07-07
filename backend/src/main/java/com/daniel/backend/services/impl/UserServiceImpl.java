@@ -1,6 +1,7 @@
 package com.daniel.backend.services.impl;
 
 import com.daniel.backend.dtos.createUserDTOs.RequestUserDTO;
+import com.daniel.backend.dtos.emailDTOs.RequestEmailTokenDTO;
 import com.daniel.backend.dtos.loginDTOs.ResponseTokenDTO;
 import com.daniel.backend.dtos.loginDTOs.RequestLoginDTO;
 import com.daniel.backend.dtos.createUserDTOs.ResponseUserDTO;
@@ -10,8 +11,13 @@ import com.daniel.backend.mappers.UserMapper;
 import com.daniel.backend.repositories.UserRepository;
 import com.daniel.backend.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 
 @Service
@@ -23,11 +29,31 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final TokenService tokenService;
 
+    private final JavaMailSender javaMailSender;
+
+    @Value("${spring.mail.username}")
+    private String senderMail;
+
     @Override
     public ResponseUserDTO create(RequestUserDTO userDTO) {
         UserEntity user = mapper.toEntity(userDTO);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user = userRepository.save(user);
+
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+
+            message.setFrom(senderMail);
+            message.setTo(user.getEmail());
+            message.setSubject("Token validar email");
+            message.setText(user.getTokenUserMail());
+
+            javaMailSender.send(message);
+
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+
         return mapper.toDTO(user);
     }
 
@@ -44,5 +70,16 @@ public class UserServiceImpl implements UserService {
         String token = tokenService.generateToken(user);
 
         return new ResponseTokenDTO(user.getId(), user.getEmail(), token);
+    }
+
+    @Override
+    public void validateUserToken(RequestEmailTokenDTO tokenDTO, Long id) {
+        UserEntity user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user"));
+        if (tokenDTO.token().equals(user.getTokenUserMail())) {
+            user.setValid(true);
+        } else {
+            throw new IllegalArgumentException("Invalid token");
+        }
+
     }
 }

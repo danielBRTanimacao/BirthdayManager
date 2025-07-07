@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -29,9 +30,21 @@ public class UserEntity {
     private String email;
     private String password;
 
+    private String tokenUserMail;
+
+    private boolean isValid;
+
+    private boolean isSubmitted;
+
     @CreationTimestamp
     private Timestamp createdDate;
 
     @UpdateTimestamp
     private Timestamp updatedDate;
+
+    @PrePersist
+    void createTokenMail() {
+        this.tokenUserMail = UUID.randomUUID().toString();
+        this.isValid = false;
+    }
 }

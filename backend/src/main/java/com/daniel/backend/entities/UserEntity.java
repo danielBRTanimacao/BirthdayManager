@@ -1,5 +1,6 @@
 package com.daniel.backend.entities;
 
+import com.daniel.backend.components.TokenGenerate;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -44,7 +45,7 @@ public class UserEntity {
 
     @PrePersist
     void createTokenMail() {
-        this.tokenUserMail = UUID.randomUUID().toString();
+        this.tokenUserMail = TokenGenerate.generateToken();
         this.isValid = false;
     }
 }

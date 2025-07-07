@@ -38,7 +38,6 @@ public class UserServiceImpl implements UserService {
     public ResponseUserDTO create(RequestUserDTO userDTO) {
         UserEntity user = mapper.toEntity(userDTO);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user = userRepository.save(user);
 
         try {
             SimpleMailMessage message = new SimpleMailMessage();
@@ -54,6 +53,7 @@ public class UserServiceImpl implements UserService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
 
+        user = userRepository.save(user);
         return mapper.toDTO(user);
     }
 

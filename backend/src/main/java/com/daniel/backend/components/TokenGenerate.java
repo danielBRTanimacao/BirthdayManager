@@ -1,20 +1,25 @@
 package com.daniel.backend.components;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.stereotype.Component;
+
 import java.util.Random;
 
+@Component
 public class TokenGenerate {
     private static final String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
     public static String generateToken() {
         Random random = new Random();
 
-        Map<Integer, Character> map = new HashMap<>();
-        for (int i = 0; i < characters.length(); i++) {
-            map.put(i, characters.charAt(random.nextInt(characters.length())));
+        StringBuilder token = new StringBuilder();
+        for (int i = 0; i < 6; i++) {
+            token.append(
+                    characters.charAt(
+                            random.nextInt(characters.length())
+                    )
+            );
         }
 
-        return map.toString();
+        return token.toString();
     }
 }

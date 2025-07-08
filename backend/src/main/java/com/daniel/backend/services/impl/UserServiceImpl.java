@@ -1,5 +1,6 @@
 package com.daniel.backend.services.impl;
 
+import com.daniel.backend.components.TokenGenerate;
 import com.daniel.backend.dtos.createUserDTOs.RequestUserDTO;
 import com.daniel.backend.dtos.emailDTOs.RequestEmailTokenDTO;
 import com.daniel.backend.dtos.loginDTOs.ResponseTokenDTO;
@@ -18,6 +19,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 
 @Service
@@ -38,6 +42,8 @@ public class UserServiceImpl implements UserService {
     public ResponseUserDTO create(RequestUserDTO userDTO) {
         UserEntity user = mapper.toEntity(userDTO);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        user.setTokenUserMail(TokenGenerate.generateToken());
 
         try {
             SimpleMailMessage message = new SimpleMailMessage();
@@ -74,9 +80,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void validateUserToken(RequestEmailTokenDTO tokenDTO, Long id) {
-        UserEntity user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user"));
+        UserEntity user = userRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("Invalid user")
+        );
+        // 30 - 25 = 5
+
+        if () {}
         if (tokenDTO.token().equals(user.getTokenUserMail())) {
             user.setValid(true);
+            user.setTokenUserMail("");
         } else {
             throw new IllegalArgumentException("Invalid token");
         }

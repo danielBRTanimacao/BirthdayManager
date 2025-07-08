@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,11 +32,11 @@ public class UserEntity {
     private String email;
     private String password;
 
+    // private UserStatus status;
+
     private String tokenUserMail;
 
     private boolean isValid;
-
-    private boolean isSubmitted;
 
     @CreationTimestamp
     private Timestamp createdDate;
@@ -43,9 +44,15 @@ public class UserEntity {
     @UpdateTimestamp
     private Timestamp updatedDate;
 
+    @CreationTimestamp
+    private Timestamp expireTimerToken;
+    // Alterar timestamp
+    // pesquisar como fazer o tempo atual menos o tempo da expiração
+    // aplicar status para usuario ser alterado
+
     @PrePersist
     void createTokenMail() {
-        this.tokenUserMail = TokenGenerate.generateToken();
         this.isValid = false;
+        // this.status = UserStatus.DRAFT;
     }
 }

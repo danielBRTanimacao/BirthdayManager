@@ -1,6 +1,6 @@
 package com.daniel.backend.services.impl;
 
-import com.daniel.backend.components.TokenGenerate;
+import com.daniel.backend.components.UserMailSender;
 import com.daniel.backend.dtos.createUserDTOs.RequestUserDTO;
 import com.daniel.backend.dtos.emailDTOs.RequestEmailTokenDTO;
 import com.daniel.backend.dtos.loginDTOs.ResponseTokenDTO;
@@ -14,12 +14,9 @@ import com.daniel.backend.repositories.UserRepository;
 import com.daniel.backend.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 
@@ -35,29 +32,12 @@ public class UserServiceImpl implements UserService {
 
     private final JavaMailSender javaMailSender;
 
-    @Value("${spring.mail.username}")
-    private String senderMail;
-
     @Override
     public ResponseUserDTO create(RequestUserDTO userDTO) {
         UserEntity user = mapper.toEntity(userDTO);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        user.setTokenUserMail(TokenGenerate.generateToken());
-
-        try {
-            SimpleMailMessage message = new SimpleMailMessage();
-
-            message.setFrom(senderMail);
-            message.setTo(user.getEmail());
-            message.setSubject("Token validar email");
-            message.setText(user.getTokenUserMail());
-
-            javaMailSender.send(message);
-
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        }
+        UserMailSender.mailSender(user, javaMailSender);
 
         user = userRepository.save(user);
         return mapper.toDTO(user);
@@ -69,27 +49,17 @@ public class UserServiceImpl implements UserService {
                 () -> new IllegalArgumentException("Invalid user")
         );
 
+        String beforeMail = user.getEmail();
+
         user = mapper.partialUpdate(userDTO, user);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setUpdatedDate(LocalDateTime.now());
-        user.setTokenUserMail(TokenGenerate.generateToken());
 
-        try {
-            SimpleMailMessage message = new SimpleMailMessage();
-
-            message.setFrom(senderMail);
-            message.setTo(user.getEmail());
-            message.setSubject("Token validar email");
-            message.setText(user.getTokenUserMail());
-
-            javaMailSender.send(message);
-
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        if (!beforeMail.equals(userDTO.email())) {
+            UserMailSender.mailSender(user, javaMailSender);
+            user.setExpireTimerToken(LocalDateTime.now().plusMinutes(30));
+            user.setStatus(UserStatus.DRAFT);
         }
-
-        user.setExpireTimerToken(LocalDateTime.now().plusMinutes(30));
-        user.setStatus(UserStatus.DRAFT);
 
         userRepository.save(user);
         return mapper.toDTO(user);

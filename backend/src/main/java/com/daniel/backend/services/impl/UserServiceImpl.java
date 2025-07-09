@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -83,14 +84,18 @@ public class UserServiceImpl implements UserService {
         UserEntity user = userRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("Invalid user")
         );
-        // 30 - 25 = 5
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime plusHours = user.getCreatedDate().plusMinutes(30);
 
-        if () {}
-        if (tokenDTO.token().equals(user.getTokenUserMail())) {
-            user.setValid(true);
-            user.setTokenUserMail("");
+        if (now.isBefore(plusHours)) {
+            if (tokenDTO.token().equals(user.getTokenUserMail())) {
+                user.setValid(true);
+                user.setTokenUserMail("");
+            } else {
+                throw new IllegalArgumentException("Invalid token");
+            }
         } else {
-            throw new IllegalArgumentException("Invalid token");
+            throw new IllegalArgumentException("Token expired");
         }
 
     }

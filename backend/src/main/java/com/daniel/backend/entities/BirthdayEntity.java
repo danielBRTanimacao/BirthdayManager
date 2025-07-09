@@ -5,8 +5,11 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -34,10 +37,10 @@ public class BirthdayEntity {
 
     private String textColor;
 
-    @CreationTimestamp
-    private Timestamp createdDate;
+    @CreatedDate
+    private LocalDateTime createdDate;
 
-    @UpdateTimestamp
-    private Timestamp updatedDate;
+    @LastModifiedDate
+    private LocalDateTime updatedDate;
 
 }

@@ -1,16 +1,12 @@
 package com.daniel.backend.entities;
 
-import com.daniel.backend.components.TokenGenerate;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import java.sql.Timestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Getter
@@ -38,21 +34,18 @@ public class UserEntity {
 
     private boolean isValid;
 
-    @CreationTimestamp
-    private Timestamp createdDate;
+    private LocalDateTime createdDate;
 
-    @UpdateTimestamp
-    private Timestamp updatedDate;
+    private LocalDateTime updatedDate;
 
-    @CreationTimestamp
-    private Timestamp expireTimerToken;
-    // Alterar timestamp
-    // pesquisar como fazer o tempo atual menos o tempo da expiração
-    // aplicar status para usuario ser alterado
+    private LocalDateTime expireTimerToken;
 
     @PrePersist
     void createTokenMail() {
         this.isValid = false;
+        this.createdDate  = LocalDateTime.now();
+        this.updatedDate = LocalDateTime.now();
+        this.expireTimerToken = LocalDateTime.now();
         // this.status = UserStatus.DRAFT;
     }
 }

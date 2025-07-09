@@ -28,7 +28,7 @@ public class UserEntity {
     private String email;
     private String password;
 
-    // private UserStatus status;
+    private UserStatus status;
 
     private String tokenUserMail;
 
@@ -46,6 +46,6 @@ public class UserEntity {
         this.createdDate  = LocalDateTime.now();
         this.updatedDate = LocalDateTime.now();
         this.expireTimerToken = LocalDateTime.now();
-        // this.status = UserStatus.DRAFT;
+        this.status = UserStatus.DRAFT;
     }
 }

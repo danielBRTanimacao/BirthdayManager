@@ -17,6 +17,9 @@ public interface UserController {
     @PostMapping("/create")
     ResponseEntity<ResponseUserDTO> createUser(@Valid @RequestBody RequestUserDTO dto);
 
+    @PostMapping("/update/{id}")
+    ResponseEntity<ResponseUserDTO> updateUser(@Valid @RequestBody RequestUserDTO dto, @PathVariable Long id);
+
     @PostMapping("/login")
     ResponseEntity<ResponseTokenDTO> loginUser(@Valid @RequestBody RequestLoginDTO dto);
 

@@ -9,6 +9,8 @@ import com.daniel.backend.dtos.loginDTOs.ResponseTokenDTO;
 public interface UserService {
     ResponseUserDTO create(RequestUserDTO userDTO);
 
+    ResponseUserDTO update(RequestUserDTO userDTO, Long id);
+
     ResponseTokenDTO login(RequestLoginDTO userDTO);
 
     void validateUserToken(RequestEmailTokenDTO tokenDTO, Long id);

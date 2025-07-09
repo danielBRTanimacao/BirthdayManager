@@ -7,6 +7,7 @@ import com.daniel.backend.dtos.loginDTOs.ResponseTokenDTO;
 import com.daniel.backend.dtos.loginDTOs.RequestLoginDTO;
 import com.daniel.backend.dtos.createUserDTOs.ResponseUserDTO;
 import com.daniel.backend.entities.UserEntity;
+import com.daniel.backend.entities.UserStatus;
 import com.daniel.backend.infra.security.TokenService;
 import com.daniel.backend.mappers.UserMapper;
 import com.daniel.backend.repositories.UserRepository;
@@ -20,8 +21,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -65,6 +64,38 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public ResponseUserDTO update(RequestUserDTO userDTO, Long id) {
+        UserEntity user = userRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("Invalid user")
+        );
+
+        user = mapper.partialUpdate(userDTO, user);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setUpdatedDate(LocalDateTime.now());
+        user.setTokenUserMail(TokenGenerate.generateToken());
+
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+
+            message.setFrom(senderMail);
+            message.setTo(user.getEmail());
+            message.setSubject("Token validar email");
+            message.setText(user.getTokenUserMail());
+
+            javaMailSender.send(message);
+
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+
+        user.setExpireTimerToken(LocalDateTime.now().plusMinutes(30));
+        user.setStatus(UserStatus.DRAFT);
+
+        userRepository.save(user);
+        return mapper.toDTO(user);
+    }
+
+    @Override
     public ResponseTokenDTO login(RequestLoginDTO userDTO) {
 
         UserEntity user = userRepository.findByEmail(userDTO.email())
@@ -91,6 +122,7 @@ public class UserServiceImpl implements UserService {
             if (tokenDTO.token().equals(user.getTokenUserMail())) {
                 user.setValid(true);
                 user.setTokenUserMail("");
+                user.setStatus(UserStatus.ACTIVE);
             } else {
                 throw new IllegalArgumentException("Invalid token");
             }

@@ -16,8 +16,6 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
 public class BirthdayEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

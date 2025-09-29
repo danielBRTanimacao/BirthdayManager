@@ -12,8 +12,6 @@ import java.util.List;
 @Getter
 @Setter
 @ToString(exclude = "birthdays")
-@NoArgsConstructor
-@AllArgsConstructor
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,8 +30,6 @@ public class UserEntity {
 
     private String tokenUserMail;
 
-    private boolean isValid;
-
     private LocalDateTime createdDate;
 
     private LocalDateTime updatedDate;
@@ -42,7 +38,6 @@ public class UserEntity {
 
     @PrePersist
     void createTokenMail() {
-        this.isValid = false;
         this.createdDate  = LocalDateTime.now();
         this.updatedDate = LocalDateTime.now();
         this.expireTimerToken = LocalDateTime.now();

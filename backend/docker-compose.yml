@@ -1,5 +1,6 @@
 services:
   db:
+    container_name: db-birthday
     image: postgres:17
     environment:
       POSTGRES_USER: postgres

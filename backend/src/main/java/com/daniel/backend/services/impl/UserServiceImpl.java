@@ -90,8 +90,7 @@ public class UserServiceImpl implements UserService {
 
         if (now.isBefore(plusHours)) {
             if (tokenDTO.token().equals(user.getTokenUserMail())) {
-                user.setValid(true);
-                user.setTokenUserMail("");
+                user.setTokenUserMail("VALID");
                 user.setStatus(UserStatus.ACTIVE);
             } else {
                 throw new IllegalArgumentException("Invalid token");

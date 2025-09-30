@@ -27,20 +27,20 @@ public class UserEntity {
     private String password;
 
     private UserStatus status;
-
     private String tokenUserMail;
 
     private LocalDateTime createdDate;
-
     private LocalDateTime updatedDate;
-
-    private LocalDateTime expireTimerToken;
 
     @PrePersist
     void createTokenMail() {
         this.createdDate  = LocalDateTime.now();
         this.updatedDate = LocalDateTime.now();
-        this.expireTimerToken = LocalDateTime.now();
         this.status = UserStatus.DRAFT;
+    }
+
+    @PreUpdate
+    void updateTokenMail() {
+        this.updatedDate = LocalDateTime.now();
     }
 }
